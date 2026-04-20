@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Insider — 18s vertical ad (real LP assets)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-navy: #01366c;
+      --brand-blue: #01468a;
+      --brand-slate: #0c2334;
+      --gold: #ffbf00;
+      --gold-shadow: #cc9900;
+      --border: #e5e7eb;
+      --lp-base: https://call.insideraccidentlawyers.com;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: #0a0a0a;
+      font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    /* 9:16 stage */
+    .device {
+      width: min(100vw - 24px, 1080px);
+      aspect-ratio: 9 / 16;
+      max-height: calc(100vh - 24px);
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+      background: #000;
+    }
+    .scene {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .scene-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    /* Hero overlay matching .hero on LP */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(12, 35, 52, 0.88), rgba(1, 54, 108, 0.82)),
+        url('https://call.insideraccidentlawyers.com/images/la/hero-bg.webp');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.15));
+    }
+    .headline {
+      font-family: 'Poppins', 'Inter', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-shadow: 0 10px 24px rgba(0,0,0,0.45);
+      line-height: 1.08;
+      text-align: center;
+      padding: 0 36px;
+    }
+    .headline .accent {
+      color: #ffd24a;
+      display: block;
+      margin-top: 8px;
+    }
+    .s1 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+    .s1 .headline { font-size: clamp(28px, 7.5vw, 56px); max-width: 92%; }
+    .vo {
+      position: absolute;
+      bottom: 56px;
+      left: 24px;
+      right: 24px;
+      text-align: center;
+      font-size: clamp(14px, 3.8vw, 22px);
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+      line-height: 1.35;
+      z-index: 6;
+    }
+    /* Scene 2 — real LP image */
+    .full-img {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+    }
+    .full-img.dim::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(12,35,52,0.55) 0%, rgba(1,54,108,0.75) 100%);
+    }
+    .s2 .full-img {
+      background-image: url('https://call.insideraccidentlawyers.com/images/la/woman-bed-dark-sad.png');
+    }
+    .s2 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 48px 28px 120px;
+    }
+    .s2 .headline {
+      font-size: clamp(26px, 7vw, 48px);
+      color: #fff;
+    }
+    /* Scene 3 — checklist (page UI) */
+    .s3 {
+      background: linear-gradient(180deg, #f3f6fa 0%, #fff 40%);
+    }
+    .s3 .wrap {
+      padding: 36px 20px 100px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+    .s3 h2 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: clamp(22px, 5vw, 36px);
+      color: var(--brand-navy);
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+    .checklist {
+      list-style: none;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      margin-bottom: 10px;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: clamp(15px, 3.8vw, 20px);
+      font-weight: 600;
+      color: #1f2937;
+    }
+    .box {
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
+      border: 2px solid #6b7280;
+      border-radius: 6px;
+      position: relative;
+    }
+    .neglect-line {
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: clamp(24px, 6vw, 40px);
+      color: var(--brand-navy);
+      margin-top: 8px;
+      animation: neg 18s linear infinite;
+    }
+    /* Scene 4 — attorney */
+    .s4 {
+      background: linear-gradient(135deg, rgba(1, 54, 108, 0.55), rgba(12, 35, 52, 0.65));
+    }
+    .s4 .attorney-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://call.insideraccidentlawyers.com/images/la/attorney-hero-400.webp') center top / cover no-repeat;
+      opacity: 0.45;
+    }
+    .s4 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px 20px 100px;
+    }
+    .s4 .photo {
+      flex: 1;
+      min-height: 0;
+      margin: 12px auto 0;
+      max-height: 58%;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .s4 .photo img {
+      width: auto;
+      height: 100%;
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .s4 .headline {
+      font-size: clamp(18px, 4.5vw, 30px);
+      color: #fff;
+      margin-top: 16px;
+    }
+    /* Scene 5 — CTA */
+    .s5 {
+      background: linear-gradient(180deg, var(--brand-slate) 0%, var(--brand-navy) 100%);
+    }
+    .s5 .content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 24px 80px;
+      gap: 20px;
+    }
+    .cta-btn {
+      display: block;
+      width: 100%;
+      max-width: 420px;
+      background: var(--gold);
+      color: var(--brand-navy);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: clamp(22px, 5.5vw, 32px);
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 20px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 6px 0 var(--gold-shadow), 0 10px 20px rgba(0,0,0,0.35);
+      line-height: 1.2;
+    }
+    .cta-btn .num {
+      display: block;
+      font-size: clamp(28px, 7vw, 42px);
+      letter-spacing: 0.04em;
+      margin-top: 6px;
+    }
+    .cta-sub {
+      text-align: center;
+      color: rgba(255,255,255,0.9);
+      font-size: clamp(14px, 3.5vw, 20px);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    .cta-sub strong { color: #fbba00; font-weight: 700; }
+
+    /* 18s master timeline */
+    .s1 { animation: vis1 18s linear infinite; }
+    .s2 { animation: vis2 18s linear infinite; }
+    .s3 { animation: vis3 18s linear infinite; }
+    .s4 { animation: vis4 18s linear infinite; }
+    .s5 { animation: vis5 18s linear infinite; }
+
+    @keyframes vis1 {
+      0%, 16.5% { opacity: 1; z-index: 5; }
+      16.6%, 100% { opacity: 0; z-index: 0; }
+    }
+    @keyframes vis2 {
+      0%, 16.5% { opacity: 0; }
+      16.6%, 33.2% { opacity: 1; z-index: 5; }
+      33.3%, 100% { opacity: 0; z-index: 0; }
+    }
+    @keyframes vis3 {
+      0%, 33.2% { opacity: 0; }
+      33.3%, 55.5% { opacity: 1; z-index: 5; }
+      55.6%, 100% { opacity: 0; z-index: 0; }
+    }
+    @keyframes vis4 {
+      0%, 55.5% { opacity: 0; }
+      55.6%, 77.7% { opacity: 1; z-index: 5; }
+      77.8%, 100% { opacity: 0; z-index: 0; }
+    }
+    @keyframes vis5 {
+      0%, 77.7% { opacity: 0; }
+      77.8%, 100% { opacity: 1; z-index: 5; }
+    }
+
+    @keyframes neg {
+      0%, 50% { opacity: 0; transform: translateY(8px); }
+      51%, 55.5% { opacity: 1; transform: none; }
+      55.6%, 100% { opacity: 0; }
+    }
+
+    /* Fix checklist li combined state — use class .on from keyframes by duplicating border on li */
+    @keyframes tick1-li {
+      0%, 34.5% { opacity: 0.5; border-color: var(--border); background: #fff; color: #1f2937; }
+      34.6%, 100% { opacity: 1; border-color: rgba(1, 70, 138, 0.45); background: rgba(1, 70, 138, 0.06); color: var(--brand-navy); }
+    }
+    @keyframes tick2-li {
+      0%, 36.5% { opacity: 0.5; border-color: var(--border); background: #fff; color: #1f2937; }
+      36.6%, 100% { opacity: 1; border-color: rgba(1, 70, 138, 0.45); background: rgba(1, 70, 138, 0.06); color: var(--brand-navy); }
+    }
+    @keyframes tick3-li {
+      0%, 38.5% { opacity: 0.5; border-color: var(--border); background: #fff; color: #1f2937; }
+      38.6%, 100% { opacity: 1; border-color: rgba(1, 70, 138, 0.45); background: rgba(1, 70, 138, 0.06); color: var(--brand-navy); }
+    }
+    .checklist li:nth-child(1) { animation: tick1-li 18s linear infinite; }
+    .checklist li:nth-child(2) { animation: tick2-li 18s linear infinite; }
+    .checklist li:nth-child(3) { animation: tick3-li 18s linear infinite; }
+
+    @keyframes box1 {
+      0%, 34.5% { background: transparent; border-color: #6b7280; }
+      34.6%, 100% { background: var(--brand-blue); border-color: var(--brand-blue); }
+    }
+    @keyframes box2 {
+      0%, 36.5% { background: transparent; border-color: #6b7280; }
+      36.6%, 100% { background: var(--brand-blue); border-color: var(--brand-blue); }
+    }
+    @keyframes box3 {
+      0%, 38.5% { background: transparent; border-color: #6b7280; }
+      38.6%, 100% { background: var(--brand-blue); border-color: var(--brand-blue); }
+    }
+    @keyframes checkmark1 {
+      0%, 34.5% { opacity: 0; }
+      34.6%, 100% { opacity: 1; }
+    }
+    .checklist li:nth-child(1) .box { animation: box1 18s linear infinite; }
+    .checklist li:nth-child(2) .box { animation: box2 18s linear infinite; }
+    .checklist li:nth-child(3) .box { animation: box3 18s linear infinite; }
+    .checklist li .box::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 4px;
+      width: 6px;
+      height: 12px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      opacity: 0;
+    }
+    @keyframes cm2 {
+      0%, 36.5% { opacity: 0; }
+      36.6%, 100% { opacity: 1; }
+    }
+    @keyframes cm3 {
+      0%, 38.5% { opacity: 0; }
+      38.6%, 100% { opacity: 1; }
+    }
+    .checklist li:nth-child(1) .box::after { animation: checkmark1 18s linear infinite; }
+    .checklist li:nth-child(2) .box::after { animation: cm2 18s linear infinite; }
+    .checklist li:nth-child(3) .box::after { animation: cm3 18s linear infinite; }
+
+    .hint {
+      position: fixed;
+      bottom: 8px;
+      left: 8px;
+      right: 8px;
+      text-align: center;
+      font-size: 11px;
+      color: #666;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="device" role="img" aria-label="18 second ad preview using Insider landing page assets">
+    <!-- SCENE 1: 0–3s -->
+    <section class="scene s1" aria-hidden="true">
+      <div class="scene-inner">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="content">
+          <p class="headline">THIS IS NOT<br><span class="accent">NORMAL AGING</span></p>
+        </div>
+        <p class="vo">If your parent has bed sores…</p>
+      </div>
+    </section>
+
+    <!-- SCENE 2: 3–6s — injury card image from LP -->
+    <section class="scene s2">
+      <div class="scene-inner">
+        <div class="full-img dim" role="presentation"></div>
+        <div class="content">
+          <p class="headline">WOUNDS GETTING WORSE?</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCENE 3: 6–10s — checklist -->
+    <section class="scene s3">
+      <div class="scene-inner">
+        <div class="wrap">
+          <h2>Signs families notice</h2>
+          <ul class="checklist">
+            <li><span class="box" aria-hidden="true"></span> Bed sores</li>
+            <li><span class="box" aria-hidden="true"></span> Not being repositioned</li>
+            <li><span class="box" aria-hidden="true"></span> Calls ignored</li>
+          </ul>
+          <p class="neglect-line">This is neglect.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCENE 4: 10–14s — attorney -->
+    <section class="scene s4">
+      <div class="scene-inner">
+        <div class="attorney-bg" aria-hidden="true"></div>
+        <div class="content">
+          <div class="photo">
+            <img src="https://call.insideraccidentlawyers.com/images/la/attorney-hero-400.webp" width="400" height="606" alt="Attorney" loading="lazy" decoding="async">
+          </div>
+          <p class="headline">Los Angeles Nursing Home Neglect Lawyers</p>
+        </div>
+        <p class="vo">We help families hold them accountable.</p>
+      </div>
+    </section>
+
+    <!-- SCENE 5: 14–18s — CTA -->
+    <section class="scene s5">
+      <div class="scene-inner">
+        <div class="content">
+          <a class="cta-btn" href="tel:8444674335">CALL NOW<span class="num">844-467-4335</span></a>
+          <p class="cta-sub"><strong>Free consultation</strong><br>No fee unless we win</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  <p class="hint">Real images load from call.insideraccidentlawyers.com · Screen-record this view (9:16) for your ad · Add voiceover in editor</p>
+</body>
+</html>
