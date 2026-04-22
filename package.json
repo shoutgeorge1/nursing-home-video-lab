@@ -5,7 +5,10 @@
   "description": "Render HTML ads to MP4",
   "main": "render.js",
   "scripts": {
-    "render": "node render.js"
+    "render": "node render.js",
+    "placeholders": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/generate-nursing-home-placeholders.ps1",
+    "import:assets": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/import-nursing-home-assets.ps1",
+    "build:scroll": "node scripts/build-scroll-feed.js"
   },
   "dependencies": {
     "ffmpeg-static": "^5.2.0",

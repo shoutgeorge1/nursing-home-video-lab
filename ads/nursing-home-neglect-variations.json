@@ -1,17 +1,797 @@
 [
-  {"video_id":"variation_01","hook_type":"question","emotional_angle":"guilt","narrative_style":"question_based","slides":[{"image":"black_white_elder_drinking.jpg","text":"BEDSORES?","duration":2},{"image":"daughter_holding_hand.jpg","text":"YOU TRUSTED THEM","duration":1.5},{"image":"bedside_family.jpg","text":"SHE DEPENDED ON THEM","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"THEY WEREN'T WATCHING","duration":1.5},{"image":"unattended_patient.jpg","text":"LEFT ALONE","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"THIS ISN'T \"NORMAL\"","duration":1.5},{"image":"nurse_charting.jpg","text":"THE CHARTS TELL A STORY","duration":1.5},{"image":"attorney_reviewing_documents.jpg","text":"WE INVESTIGATE FAST","duration":2},{"image":"call_now_screen.jpg","text":"CALL NOW","duration":2}]},
-  {"video_id":"variation_02","hook_type":"shock","emotional_angle":"fear","narrative_style":"rapid_punchy_cuts","slides":[{"image":"elderly_wheelchair_window_dark.jpg","text":"THIS IS NOT NORMAL","duration":2},{"image":"worried_daughter_couch.jpg","text":"YOUR GUT KNOWS","duration":1.5},{"image":"daughter_holding_hand.jpg","text":"SHE CAN'T SPEAK UP","duration":1.5},{"image":"unattended_patient.jpg","text":"NO ONE ANSWERED","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"DISTRACTED \"CARE\"","duration":1.5},{"image":"repositioning_patient.jpg","text":"SHE NEEDED TURNS","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"IT GETS WORSE","duration":1.5},{"image":"male_attorney_papers.jpg","text":"HOLD THEM ACCOUNTABLE","duration":2},{"image":"call_now_screen.jpg","text":"GET HELP TODAY","duration":2}]},
-  {"video_id":"variation_03","hook_type":"story","emotional_angle":"protection","narrative_style":"slow_emotional_build","slides":[{"image":"black_white_elder_drinking.jpg","text":"THEY SAID SHE WAS FINE","duration":2},{"image":"bedside_family.jpg","text":"YOU KEPT CHECKING","duration":1.5},{"image":"worried_daughter_couch.jpg","text":"SLEEPLESS NIGHTS","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"SIGNS WERE IGNORED","duration":1.5},{"image":"unattended_patient.jpg","text":"CALL LIGHT OUT OF REACH","duration":1.5},{"image":"nurse_charting.jpg","text":"WHAT DID THEY WRITE?","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"DAMAGE ALREADY DONE","duration":1.5},{"image":"attorney_reviewing_documents.jpg","text":"PROTECT YOUR FAMILY","duration":2},{"image":"call_now_screen.jpg","text":"TALK TO A LAWYER","duration":2}]},
-  {"video_id":"variation_04","hook_type":"fear","emotional_angle":"anger","narrative_style":"statement_based","slides":[{"image":"elderly_wheelchair_window_dark.jpg","text":"THIS GETS WORSE","duration":2},{"image":"daughter_holding_hand.jpg","text":"SHE DESERVED BETTER","duration":1.5},{"image":"bedside_family.jpg","text":"YOU ASKED QUESTIONS","duration":1.5},{"image":"unattended_patient.jpg","text":"WHERE WAS STAFF?","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"THIS IS NEGLECT","duration":1.5},{"image":"repositioning_patient.jpg","text":"THEY SHOULD HAVE MOVED HER","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"THIS WAS PREVENTABLE","duration":1.5},{"image":"male_attorney_papers.jpg","text":"FIGHT BACK NOW","duration":2},{"image":"call_now_screen.jpg","text":"NO FEE UNLESS WE WIN","duration":2}]},
-  {"video_id":"variation_05","hook_type":"authority","emotional_angle":"guilt","narrative_style":"statement_based","slides":[{"image":"black_white_elder_drinking.jpg","text":"BEDSORES ARE PREVENTABLE","duration":2},{"image":"bedside_family.jpg","text":"YOU DID EVERYTHING RIGHT","duration":1.5},{"image":"worried_daughter_couch.jpg","text":"THEY FAILED HER","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"NOT ENOUGH SUPERVISION","duration":1.5},{"image":"unattended_patient.jpg","text":"HOURS GO BY","duration":1.5},{"image":"nurse_charting.jpg","text":"RECORDS DON'T LIE","duration":1.5},{"image":"repositioning_patient.jpg","text":"STANDARD CARE EXISTS","duration":1.5},{"image":"attorney_reviewing_documents.jpg","text":"WE FIND THE TRUTH","duration":2},{"image":"call_now_screen.jpg","text":"CALL NOW","duration":2}]},
-  {"video_id":"variation_06","hook_type":"question","emotional_angle":"protection","narrative_style":"rapid_punchy_cuts","slides":[{"image":"elderly_wheelchair_window_dark.jpg","text":"IS SHE SAFE?","duration":2},{"image":"daughter_holding_hand.jpg","text":"YOU CAN'T BE THERE 24/7","duration":1.5},{"image":"worried_daughter_couch.jpg","text":"THAT'S WHY IT HURTS","duration":1.5},{"image":"unattended_patient.jpg","text":"ALONE IN THE ROOM","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"EYES OFF THE FLOOR","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"SKIN BREAKS DOWN FAST","duration":1.5},{"image":"nurse_charting.jpg","text":"WE REVIEW THE CHARTS","duration":1.5},{"image":"male_attorney_papers.jpg","text":"ACT BEFORE IT'S TOO LATE","duration":2},{"image":"call_now_screen.jpg","text":"GET HELP TODAY","duration":2}]},
-  {"video_id":"variation_07","hook_type":"shock","emotional_angle":"fear","narrative_style":"question_based","slides":[{"image":"call_now_screen.jpg","text":"IF YOU'RE WATCHING THIS","duration":2},{"image":"bedside_family.jpg","text":"SOMETHING ALREADY HAPPENED","duration":1.5},{"image":"daughter_holding_hand.jpg","text":"OR YOU'RE SCARED IT WILL","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"WHO'S REALLY IN CHARGE?","duration":1.5},{"image":"unattended_patient.jpg","text":"SILENCE IS DANGEROUS","duration":1.5},{"image":"repositioning_patient.jpg","text":"MOVING MATTERS","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"INFECTION RISK RISES","duration":1.5},{"image":"attorney_reviewing_documents.jpg","text":"TIME LIMITS MAY APPLY","duration":2},{"image":"call_now_screen.jpg","text":"CALL NOW","duration":2}]},
-  {"video_id":"variation_08","hook_type":"story","emotional_angle":"guilt","narrative_style":"slow_emotional_build","slides":[{"image":"black_white_elder_drinking.jpg","text":"THEY SAID DON'T WORRY","duration":2},{"image":"worried_daughter_couch.jpg","text":"YOU WORRIED ANYWAY","duration":1.5},{"image":"bedside_family.jpg","text":"YOU TRUSTED THEM","duration":1.5},{"image":"unattended_patient.jpg","text":"SHE WAITED","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"STAFF LOOKED AWAY","duration":1.5},{"image":"nurse_charting.jpg","text":"PAPERWORK ≠ CARE","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"WARNING SIGNS MISSED","duration":1.5},{"image":"male_attorney_papers.jpg","text":"YOU STILL HAVE OPTIONS","duration":2},{"image":"call_now_screen.jpg","text":"TALK TO A LAWYER","duration":2}]},
-  {"video_id":"variation_09","hook_type":"fear","emotional_angle":"protection","narrative_style":"rapid_punchy_cuts","slides":[{"image":"elderly_wheelchair_window_dark.jpg","text":"IT DOESN'T FIX ITSELF","duration":2},{"image":"daughter_holding_hand.jpg","text":"SHE'S VULNERABLE","duration":1.5},{"image":"worried_daughter_couch.jpg","text":"YOU'RE THE ADVOCATE","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"PRIORITIES WRONG","duration":1.5},{"image":"unattended_patient.jpg","text":"NO ONE COMING","duration":1.5},{"image":"repositioning_patient.jpg","text":"BASIC CARE MISSED","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"PAIN ESCALATES","duration":1.5},{"image":"attorney_reviewing_documents.jpg","text":"DOCUMENT EVERYTHING","duration":2},{"image":"call_now_screen.jpg","text":"GET HELP TODAY","duration":2}]},
-  {"video_id":"variation_10","hook_type":"authority","emotional_angle":"anger","narrative_style":"statement_based","slides":[{"image":"black_white_elder_drinking.jpg","text":"STANDARD OF CARE EXISTS","duration":2},{"image":"bedside_family.jpg","text":"YOUR MOM DESERVED IT","duration":1.5},{"image":"daughter_holding_hand.jpg","text":"YOUR DAD DESERVED IT","duration":1.5},{"image":"unattended_patient.jpg","text":"UNATTENDED IS UNACCEPTABLE","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"THIS IS NEGLECT","duration":1.5},{"image":"nurse_charting.jpg","text":"WE CROSS-CHECK TIMES","duration":1.5},{"image":"repositioning_patient.jpg","text":"TURNS WERE REQUIRED","duration":1.5},{"image":"male_attorney_papers.jpg","text":"MAKE THEM ANSWER","duration":2},{"image":"call_now_screen.jpg","text":"NO FEE UNLESS WE WIN","duration":2}]},
-  {"video_id":"variation_11","hook_type":"question","emotional_angle":"fear","narrative_style":"slow_emotional_build","slides":[{"image":"elderly_wheelchair_window_dark.jpg","text":"RED FLAGS?","duration":2},{"image":"worried_daughter_couch.jpg","text":"BRUISES YOU CAN'T EXPLAIN","duration":1.5},{"image":"bedside_family.jpg","text":"STORIES THAT DON'T MATCH","duration":1.5},{"image":"unattended_patient.jpg","text":"LONG WAITS","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"STAFF ON PHONES","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"PRESSURE INJURIES","duration":1.5},{"image":"nurse_charting.jpg","text":"WE READ BETWEEN LINES","duration":1.5},{"image":"attorney_reviewing_documents.jpg","text":"DON'T WAIT","duration":2},{"image":"call_now_screen.jpg","text":"CALL NOW","duration":2}]},
-  {"video_id":"variation_12","hook_type":"shock","emotional_angle":"guilt","narrative_style":"question_based","slides":[{"image":"call_now_screen.jpg","text":"STOP SCROLLING","duration":2},{"image":"daughter_holding_hand.jpg","text":"IF YOU FEEL GUILTY","duration":1.5},{"image":"worried_daughter_couch.jpg","text":"IT'S NOT YOUR FAULT","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"IT'S THE FACILITY","duration":1.5},{"image":"unattended_patient.jpg","text":"THEY WERE PAID TO CARE","duration":1.5},{"image":"repositioning_patient.jpg","text":"MOVING HER WAS THEIR JOB","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"THIS IS SERIOUS","duration":1.5},{"image":"attorney_reviewing_documents.jpg","text":"FREE CASE REVIEW","duration":2},{"image":"call_now_screen.jpg","text":"GET HELP TODAY","duration":2}]},
-  {"video_id":"variation_13","hook_type":"story","emotional_angle":"anger","narrative_style":"rapid_punchy_cuts","slides":[{"image":"black_white_elder_drinking.jpg","text":"THEY SAID SHE WAS FINE","duration":2},{"image":"bedside_family.jpg","text":"YOU SAW THE TRUTH","duration":1.5},{"image":"daughter_holding_hand.jpg","text":"DECLINE ISN'T \"AGING\"","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"CUT CORNERS","duration":1.5},{"image":"unattended_patient.jpg","text":"LEFT IN PAIN","duration":1.5},{"image":"nurse_charting.jpg","text":"SOMEONE KNEW","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"SOMEONE SHOULD HAVE ACTED","duration":1.5},{"image":"male_attorney_papers.jpg","text":"FORCE ANSWERS","duration":2},{"image":"call_now_screen.jpg","text":"TALK TO A LAWYER","duration":2}]},
-  {"video_id":"variation_14","hook_type":"fear","emotional_angle":"guilt","narrative_style":"statement_based","slides":[{"image":"elderly_wheelchair_window_dark.jpg","text":"THIS GETS WORSE","duration":2},{"image":"worried_daughter_couch.jpg","text":"YOU SAW THE SIGNS","duration":1.5},{"image":"bedside_family.jpg","text":"YOU BLAMED YOURSELF","duration":1.5},{"image":"unattended_patient.jpg","text":"SHE NEEDED HELP NOW","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"HELP DIDN'T COME","duration":1.5},{"image":"repositioning_patient.jpg","text":"SIMPLE CARE. NOT DONE.","duration":1.5},{"image":"nurse_charting.jpg","text":"WE BUILD THE TIMELINE","duration":1.5},{"image":"attorney_reviewing_documents.jpg","text":"EVIDENCE MATTERS","duration":2},{"image":"call_now_screen.jpg","text":"CALL NOW","duration":2}]},
-  {"video_id":"variation_15","hook_type":"authority","emotional_angle":"protection","narrative_style":"question_based","slides":[{"image":"black_white_elder_drinking.jpg","text":"BEDSORES ARE PREVENTABLE","duration":2},{"image":"daughter_holding_hand.jpg","text":"WHO PROTECTS HIM?","duration":1.5},{"image":"worried_daughter_couch.jpg","text":"WHO PROTECTS HER?","duration":1.5},{"image":"nurse_on_phone_ignoring.jpg","text":"NOT THIS SHIFT","duration":1.5},{"image":"unattended_patient.jpg","text":"NOT THAT ROOM","duration":1.5},{"image":"nurse_checking_bedsore.jpg","text":"INJURY = QUESTIONS","duration":1.5},{"image":"repositioning_patient.jpg","text":"CARE = REPOSITIONING","duration":1.5},{"image":"male_attorney_papers.jpg","text":"WE STAND WITH FAMILIES","duration":2},{"image":"call_now_screen.jpg","text":"NO FEE UNLESS WE WIN","duration":2}]}
+  {
+    "video_id": "variation_01",
+    "hook_type": "question",
+    "emotional_angle": "guilt",
+    "narrative_style": "question_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "LEGAL HELP FOR ELDER NEGLECT",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU TRUSTED THEM",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SHE DEPENDED ON THEM",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "THEY WEREN'T WATCHING",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "LEFT ALONE",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "THIS IS NEGLECT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY KNEW AND DID NOTHING",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE FIND OUT WHAT HAPPENED",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SEE IF YOUR CASE QUALIFIES",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_02",
+    "hook_type": "shock",
+    "emotional_angle": "fear",
+    "narrative_style": "rapid_punchy_cuts",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE FIGHT FOR YOUR RIGHTS",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOUR GUT KNOWS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SHE CAN'T SPEAK UP",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "NO ONE ANSWERED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "DISTRACTED \"CARE\"",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "SHE NEEDED TURNS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "IT GETS WORSE",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "HOLD THEM ACCOUNTABLE",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "CLICK TO GET HELP NOW",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_03",
+    "hook_type": "story",
+    "emotional_angle": "protection",
+    "narrative_style": "slow_emotional_build",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY SAID SHE WAS FINE",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU KEPT CHECKING",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SLEEPLESS NIGHTS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "THEY IGNORED THE WARNING SIGNS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "CALL LIGHT OUT OF REACH",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "WHAT DID THEY WRITE?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "DAMAGE ALREADY DONE",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "PROTECT YOUR FAMILY",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_04",
+    "hook_type": "fear",
+    "emotional_angle": "anger",
+    "narrative_style": "statement_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS GETS WORSE",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "SHE DESERVED BETTER",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOU ASKED QUESTIONS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "WHERE WAS STAFF?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS IS NEGLECT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY SHOULD HAVE MOVED HER",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS WAS PREVENTABLE",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "FIGHT BACK NOW",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_05",
+    "hook_type": "authority",
+    "emotional_angle": "guilt",
+    "narrative_style": "statement_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "BEDSORES ARE PREVENTABLE",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU DID EVERYTHING RIGHT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY FAILED HER",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "NOT ENOUGH SUPERVISION",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "HOURS GO BY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE PROVE WHAT REALLY HAPPENED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STANDARD CARE EXISTS",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "WE FIND THE TRUTH",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_06",
+    "hook_type": "question",
+    "emotional_angle": "protection",
+    "narrative_style": "rapid_punchy_cuts",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "IS SHE SAFE?",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU CAN'T BE THERE 24/7",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THAT'S WHY IT HURTS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "ALONE IN THE ROOM",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "EYES OFF THE FLOOR",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SKIN BREAKS DOWN FAST",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY KNEW AND DID NOTHING",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "ACT BEFORE IT'S TOO LATE",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "CLICK TO SEE IF YOU HAVE A CASE",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_07",
+    "hook_type": "shock",
+    "emotional_angle": "fear",
+    "narrative_style": "question_based",
+    "slides": [
+      {
+        "image": "call_now_screen.jpg",
+        "text": "IF YOU'RE WATCHING THIS",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "SOMETHING ALREADY HAPPENED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "OR YOU'RE SCARED IT WILL",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "WHO'S REALLY IN CHARGE?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SILENCE IS DANGEROUS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS HAPPENS EVERY DAY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "INFECTION RISK RISES",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "TIME LIMITS MAY APPLY",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SEE IF YOUR CASE QUALIFIES",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_08",
+    "hook_type": "story",
+    "emotional_angle": "guilt",
+    "narrative_style": "slow_emotional_build",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY SAID DON'T WORRY",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU WORRIED ANYWAY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOU TRUSTED THEM",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "SHE WAITED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STAFF LOOKED AWAY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "PAPERWORK IS NOT REAL CARE",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WARNING SIGNS MISSED",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "YOU STILL HAVE OPTIONS",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "FREE CASE REVIEW TODAY",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_09",
+    "hook_type": "fear",
+    "emotional_angle": "protection",
+    "narrative_style": "rapid_punchy_cuts",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "IT DOESN'T FIX ITSELF",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "SHE'S VULNERABLE",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOU'RE THE ADVOCATE",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "PRIORITIES WRONG",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "NO ONE COMING",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "BASIC CARE MISSED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "PAIN ESCALATES",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "DOCUMENT EVERYTHING",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "CLICK TO GET HELP NOW",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_10",
+    "hook_type": "authority",
+    "emotional_angle": "anger",
+    "narrative_style": "statement_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STANDARD OF CARE EXISTS",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOUR MOM DESERVED IT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOUR DAD DESERVED IT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "UNATTENDED IS UNACCEPTABLE",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS IS NEGLECT",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "WE CROSS-CHECK TIMES",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "TURNS WERE REQUIRED",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "MAKE THEM ANSWER",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_11",
+    "hook_type": "question",
+    "emotional_angle": "fear",
+    "narrative_style": "slow_emotional_build",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SERVING LOS ANGELES COUNTY",
+        "duration": 2
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "BRUISES YOU CAN'T EXPLAIN",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STORIES THAT DON'T MATCH",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "THIS SHOULD NOT HAPPEN",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STAFF ON PHONES",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "PRESSURE INJURIES",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE FIND WHAT THEY HID",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "DON'T WAIT",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_12",
+    "hook_type": "shock",
+    "emotional_angle": "guilt",
+    "narrative_style": "question_based",
+    "slides": [
+      {
+        "image": "call_now_screen.jpg",
+        "text": "STOP SCROLLING",
+        "duration": 2
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "IF YOU FEEL GUILTY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "IT'S NOT YOUR FAULT",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "IT'S THE FACILITY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY WERE PAID TO CARE",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "MOVING HER WAS THEIR JOB",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS IS SERIOUS",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "FREE CASE REVIEW",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_13",
+    "hook_type": "story",
+    "emotional_angle": "anger",
+    "narrative_style": "rapid_punchy_cuts",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY SAID SHE WAS FINE",
+        "duration": 2
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "YOU SAW THE TRUTH",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "DECLINE ISN'T \"AGING\"",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "CUT CORNERS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "LEFT IN PAIN",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "THEY KNEW AND SAID NOTHING",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SOMEONE SHOULD HAVE ACTED",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "FORCE ANSWERS",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SPEAK WITH A LAWYER NOW",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_14",
+    "hook_type": "fear",
+    "emotional_angle": "guilt",
+    "narrative_style": "statement_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS GETS WORSE",
+        "duration": 2
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "YOU SAW THE SIGNS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOU BLAMED YOURSELF",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SHE NEEDED HELP NOW",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "HELP DIDN'T COME",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SIMPLE CARE. NOT DONE.",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE PROVE WHAT HAPPENED",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "EVIDENCE MATTERS",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN YOUR CASE",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_15",
+    "hook_type": "authority",
+    "emotional_angle": "protection",
+    "narrative_style": "question_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "BEDSORES ARE PREVENTABLE",
+        "duration": 2
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "WHO PROTECTS HIM?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WHO PROTECTS HER?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "NOT THIS SHIFT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "NOT THAT ROOM",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "INJURY = QUESTIONS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "CARE = REPOSITIONING",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "WE STAND WITH FAMILIES",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  }
 ]

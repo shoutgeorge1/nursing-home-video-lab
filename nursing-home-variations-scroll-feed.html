@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nursing home variations</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      color: #fff;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      padding: 48px 16px 88px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 64px;
+      background:
+        radial-gradient(ellipse 90% 70% at 20% 10%, rgba(50, 75, 150, 0.18), transparent 50%),
+        radial-gradient(ellipse 80% 50% at 80% 90%, rgba(140, 90, 40, 0.1), transparent 50%),
+        radial-gradient(ellipse 100% 80% at 50% -15%, rgba(32, 38, 68, 0.55), transparent 52%),
+        linear-gradient(180deg, #0a0a10 0%, #050508 45%, #07070b 100%);
+    }
+    .card {
+      width: min(360px, 92vw);
+      aspect-ratio: 9 / 16;
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #0f1018 0%, #07070c 40%, #0a0a12 100%);
+      box-shadow:
+        0 22px 56px rgba(0,0,0,0.72),
+        0 0 0 1px rgba(255,255,255,0.05),
+        0 0 80px -25px rgba(50, 90, 180, 0.14);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      padding: 1px;
+      box-sizing: border-box;
+      background: linear-gradient(145deg,
+        rgba(255,255,255,0.07) 0%,
+        rgba(180, 150, 90, 0.1) 45%,
+        rgba(255,255,255,0.03) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 4;
+    }
+    .logo-cta {
+      display: block;
+      margin: 0.55em 0 0 0;
+      line-height: 0;
+    }
+    .logo-cta .logo-inner {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2em;
+      max-width: 100%;
+      padding: 0.5em 0.75em 0.4em 0.75em;
+      line-height: 1.05;
+      text-align: center;
+      text-rendering: optimizeLegibility;
+      color: #fafbfc;
+      background: linear-gradient(180deg, rgba(18,18,26,0.96) 0%, rgba(8,8,12,0.98) 100%);
+      border-radius: 2px;
+    }
+    .logo-line {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+    .logo-line--brand {
+      font-size: clamp(0.8rem, 2.4vw, 0.95rem);
+      letter-spacing: 0.2em;
+      text-indent: 0.1em;
+    }
+    .logo-line--trademark {
+      font-size: clamp(0.72rem, 2.1vw, 0.86rem);
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      text-indent: 0.1em;
+      color: #e8eaed;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease, filter 0.5s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .slide.on {
+      opacity: 1;
+      z-index: 3;
+      filter: blur(0px);
+    }
+    .slide:not(.on) {
+      filter: blur(4px);
+    }
+    .slide .layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    .slide .layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background:
+        radial-gradient(circle at 50% 120%, rgba(255,180,0,0.12), transparent 60%),
+        linear-gradient(to top, rgba(0,0,0,0.5), transparent 40%);
+    }
+    .slide.slide--image .layer::after {
+      display: block;
+      z-index: 2;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.2) 0%, transparent 22%),
+        linear-gradient(0deg, rgba(0,0,0,0.35) 0%, transparent 28%),
+        linear-gradient(90deg, rgba(0,0,0,0.18) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.18) 100%),
+        radial-gradient(ellipse 100% 85% at 50% 50%, transparent 55%, rgba(0,0,0,0.4) 100%),
+        linear-gradient(130deg, rgba(45, 75, 200, 0.06) 0%, transparent 40%);
+    }
+    .slide.slide--text .layer::after {
+      display: none;
+    }
+    .slide.slide--image .layer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4.5% 5.5%;
+      background:
+        radial-gradient(ellipse 95% 70% at 50% 0%, rgba(50, 70, 120, 0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 90% 55% at 50% 100%, rgba(150, 100, 50, 0.12) 0%, transparent 50%),
+        linear-gradient(160deg, #0a0a12 0%, #020203 45%, #06060c 100%);
+      box-shadow: inset 0 0 72px rgba(0,0,0,0.3);
+    }
+    .slide .layer img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      object-fit: contain;
+      object-position: center center;
+      display: block;
+      transform-origin: center center;
+      will-change: transform;
+    }
+    .slide.slide--image .layer img {
+      position: relative;
+      z-index: 0;
+      width: auto;
+      height: auto;
+      left: auto;
+      top: auto;
+      max-width: 100%;
+      max-height: 100%;
+      margin: auto;
+      border-radius: 4px;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.2),
+        0 10px 36px rgba(0,0,0,0.42);
+      transform: scale(0.88);
+    }
+    .slide .cap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      padding-left: 7%;
+      padding-right: 7%;
+      font-weight: 900;
+      font-size: clamp(1.12rem, 4.8vw, 1.42rem);
+      line-height: 1.02;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      text-align: center;
+      color: #fafafa;
+      text-shadow: 0 0 2px #000, 0 3px 20px rgba(0,0,0,0.95), 0 0 36px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.48s ease 0.1s;
+    }
+    .slide.on .cap { opacity: 1; }
+    .slide.slide--text .cap.cap-text-only {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-rendering: optimizeLegibility;
+      padding: 10% 7%;
+      font-size: clamp(1.5rem, 6.5vw, 2.2rem);
+      line-height: 0.95;
+      letter-spacing: 0.045em;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #f2f3f5;
+      background:
+        linear-gradient(180deg, rgba(50, 85, 180, 0.1) 0%, transparent 18%),
+        linear-gradient(165deg, rgba(6,7,12,0.35) 0%, transparent 45%),
+        radial-gradient(ellipse 100% 70% at 50% 45%, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.97) 65%),
+        radial-gradient(ellipse 90% 50% at 50% 115%, rgba(200, 155, 60, 0.2), transparent 55%),
+        radial-gradient(circle at 50% 0%, rgba(50, 60, 100, 0.3), transparent 45%),
+        linear-gradient(180deg, #000 0%, #080810 100%);
+      box-shadow: inset 0 0 28px rgba(0,0,0,0.22);
+      text-shadow:
+        0 0 1px rgba(0,0,0,0.8),
+        0 1px 2px rgba(0,0,0,0.95),
+        0 4px 24px rgba(0,0,0,0.85),
+        0 0 40px rgba(0,0,0,0.5);
+    }
+    .cap-cta__la {
+      max-width: 100%;
+      margin: 0.2em 0 0.1em 0;
+      padding: 0 2%;
+      font-size: clamp(0.72rem, 2.05vw, 0.92rem);
+      line-height: 1.25;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0.035em;
+      text-align: center;
+      color: #e6e8ed;
+    }
+    .cap-cta__disclaimer {
+      max-width: 95%;
+      margin: 0.5em 0 0 0;
+      font-size: clamp(0.47rem, 1.1vw, 0.6rem);
+      line-height: 1.4;
+      font-weight: 500;
+      text-transform: none;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.55);
+    }
+    .slide.slide--text .cap.cap-text-only.cap-cta {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.1em;
+      padding: 7% 5.5% 8% 5.5%;
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(40, 75, 200, 0.12) 0%, transparent 20%),
+        linear-gradient(165deg, rgba(8,9,16,0.4) 0%, transparent 40%),
+        radial-gradient(ellipse 95% 75% at 50% 50%, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.98) 100%),
+        radial-gradient(ellipse 85% 55% at 50% 120%, rgba(200, 155, 60, 0.25), transparent 50%),
+        linear-gradient(180deg, #020203 0%, #0a0a12 100%);
+      box-shadow: inset 0 0 36px rgba(0,0,0,0.35);
+    }
+    .cap-cta__copy {
+      max-width: 100%;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+    .slide.slide--text .cap.cap-text-only.cap-cta .cap-cta__copy {
+      font-size: clamp(1.75rem, 7.2vw, 2.4rem);
+      line-height: 0.9;
+      letter-spacing: 0.035em;
+      color: #ffffff;
+      text-shadow:
+        0 0 1px #000,
+        0 2px 4px rgba(0,0,0,0.9),
+        0 6px 28px rgba(0,0,0,0.85);
+    }
+    .card > .slide:first-child.slide--text .cap.cap-text-only:not(.cap-cta) {
+      font-size: clamp(2rem, 9vw, 3rem);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+    }
+    .slide .cap.pos-bottom {
+      bottom: 0;
+      padding-bottom: 11%;
+      padding-top: 26%;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 52%, transparent 100%);
+    }
+    .slide .cap.pos-top {
+      top: 0;
+      padding-top: 11%;
+      padding-bottom: 38%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.35) 48%, transparent 100%);
+    }
+    .slide .cap.pos-center {
+      top: 50%;
+      transform: translateY(-50%);
+      padding-top: 5%;
+      padding-bottom: 5%;
+      background: radial-gradient(ellipse 88% 72% at 50% 50%, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.32) 58%, transparent 74%);
+    }
+    .slide .cap.pos-split {
+      top: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 9%;
+      padding-bottom: 9%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 36%, transparent 64%, rgba(0,0,0,0.5) 100%);
+    }
+    .slide .cap.pos-split .ln { display: block; }
+    /* Slow Ken Burns: gentle zoom in ↔ out, long duration, alternate avoids end snap */
+    .cam-zoom-slow {
+      animation: kCamZoomSlow 34s ease-in-out infinite alternate;
+    }
+    @keyframes kCamZoomSlow {
+      from { transform: scale(0.86); }
+      to { transform: scale(0.99); }
+    }
+    .cam-zoom-slow.cam-zoom-slow--lag3 {
+      animation-delay: -8.5s;
+    }
+    .cam-zoom-slow.cam-zoom-slow--lag2 {
+      animation-delay: -17s;
+    }
+    .cam-zoom-slow.cam-zoom-slow--lag1 {
+      animation-delay: -25.5s;
+    }
+  </style>
+</head>
+<body>
+  <script type="application/json" id="variations-json">[
+  {
+    "video_id": "variation_01",
+    "hook_type": "question",
+    "emotional_angle": "guilt",
+    "narrative_style": "question_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "LEGAL HELP FOR ELDER NEGLECT",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU TRUSTED THEM",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SHE DEPENDED ON THEM",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "THEY WEREN'T WATCHING",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "LEFT ALONE",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "THIS IS NEGLECT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY KNEW AND DID NOTHING",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE FIND OUT WHAT HAPPENED",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SEE IF YOUR CASE QUALIFIES",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_02",
+    "hook_type": "shock",
+    "emotional_angle": "fear",
+    "narrative_style": "rapid_punchy_cuts",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE FIGHT FOR YOUR RIGHTS",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOUR GUT KNOWS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SHE CAN'T SPEAK UP",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "NO ONE ANSWERED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "DISTRACTED \"CARE\"",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "SHE NEEDED TURNS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "IT GETS WORSE",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "HOLD THEM ACCOUNTABLE",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "CLICK TO GET HELP NOW",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_03",
+    "hook_type": "story",
+    "emotional_angle": "protection",
+    "narrative_style": "slow_emotional_build",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY SAID SHE WAS FINE",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU KEPT CHECKING",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SLEEPLESS NIGHTS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "THEY IGNORED THE WARNING SIGNS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "CALL LIGHT OUT OF REACH",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "WHAT DID THEY WRITE?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "DAMAGE ALREADY DONE",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "PROTECT YOUR FAMILY",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_04",
+    "hook_type": "fear",
+    "emotional_angle": "anger",
+    "narrative_style": "statement_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS GETS WORSE",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "SHE DESERVED BETTER",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOU ASKED QUESTIONS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "WHERE WAS STAFF?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS IS NEGLECT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY SHOULD HAVE MOVED HER",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS WAS PREVENTABLE",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "FIGHT BACK NOW",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_05",
+    "hook_type": "authority",
+    "emotional_angle": "guilt",
+    "narrative_style": "statement_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "BEDSORES ARE PREVENTABLE",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU DID EVERYTHING RIGHT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY FAILED HER",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "NOT ENOUGH SUPERVISION",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "HOURS GO BY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE PROVE WHAT REALLY HAPPENED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STANDARD CARE EXISTS",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "WE FIND THE TRUTH",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_06",
+    "hook_type": "question",
+    "emotional_angle": "protection",
+    "narrative_style": "rapid_punchy_cuts",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "IS SHE SAFE?",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU CAN'T BE THERE 24/7",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THAT'S WHY IT HURTS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "ALONE IN THE ROOM",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "EYES OFF THE FLOOR",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SKIN BREAKS DOWN FAST",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY KNEW AND DID NOTHING",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "ACT BEFORE IT'S TOO LATE",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "CLICK TO SEE IF YOU HAVE A CASE",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_07",
+    "hook_type": "shock",
+    "emotional_angle": "fear",
+    "narrative_style": "question_based",
+    "slides": [
+      {
+        "image": "call_now_screen.jpg",
+        "text": "IF YOU'RE WATCHING THIS",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "SOMETHING ALREADY HAPPENED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "OR YOU'RE SCARED IT WILL",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "WHO'S REALLY IN CHARGE?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SILENCE IS DANGEROUS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS HAPPENS EVERY DAY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "INFECTION RISK RISES",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "TIME LIMITS MAY APPLY",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SEE IF YOUR CASE QUALIFIES",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_08",
+    "hook_type": "story",
+    "emotional_angle": "guilt",
+    "narrative_style": "slow_emotional_build",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY SAID DON'T WORRY",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOU WORRIED ANYWAY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOU TRUSTED THEM",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "SHE WAITED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STAFF LOOKED AWAY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "PAPERWORK IS NOT REAL CARE",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WARNING SIGNS MISSED",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "YOU STILL HAVE OPTIONS",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "FREE CASE REVIEW TODAY",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_09",
+    "hook_type": "fear",
+    "emotional_angle": "protection",
+    "narrative_style": "rapid_punchy_cuts",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "IT DOESN'T FIX ITSELF",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "SHE'S VULNERABLE",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOU'RE THE ADVOCATE",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "PRIORITIES WRONG",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "NO ONE COMING",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "BASIC CARE MISSED",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "PAIN ESCALATES",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "DOCUMENT EVERYTHING",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "CLICK TO GET HELP NOW",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_10",
+    "hook_type": "authority",
+    "emotional_angle": "anger",
+    "narrative_style": "statement_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STANDARD OF CARE EXISTS",
+        "duration": 2
+      },
+      {
+        "image": "daughter_holding_hand.jpg",
+        "text": "YOUR MOM DESERVED IT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOUR DAD DESERVED IT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "UNATTENDED IS UNACCEPTABLE",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS IS NEGLECT",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "WE CROSS-CHECK TIMES",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "TURNS WERE REQUIRED",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "MAKE THEM ANSWER",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_11",
+    "hook_type": "question",
+    "emotional_angle": "fear",
+    "narrative_style": "slow_emotional_build",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SERVING LOS ANGELES COUNTY",
+        "duration": 2
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "BRUISES YOU CAN'T EXPLAIN",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STORIES THAT DON'T MATCH",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "THIS SHOULD NOT HAPPEN",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "STAFF ON PHONES",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "PRESSURE INJURIES",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE FIND WHAT THEY HID",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "DON'T WAIT",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_12",
+    "hook_type": "shock",
+    "emotional_angle": "guilt",
+    "narrative_style": "question_based",
+    "slides": [
+      {
+        "image": "call_now_screen.jpg",
+        "text": "STOP SCROLLING",
+        "duration": 2
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "IF YOU FEEL GUILTY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "IT'S NOT YOUR FAULT",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "IT'S THE FACILITY",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY WERE PAID TO CARE",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "MOVING HER WAS THEIR JOB",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS IS SERIOUS",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "FREE CASE REVIEW",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_13",
+    "hook_type": "story",
+    "emotional_angle": "anger",
+    "narrative_style": "rapid_punchy_cuts",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THEY SAID SHE WAS FINE",
+        "duration": 2
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "YOU SAW THE TRUTH",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "DECLINE ISN'T \"AGING\"",
+        "duration": 1.5
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "CUT CORNERS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "LEFT IN PAIN",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "THEY KNEW AND SAID NOTHING",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SOMEONE SHOULD HAVE ACTED",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "FORCE ANSWERS",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SPEAK WITH A LAWYER NOW",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_14",
+    "hook_type": "fear",
+    "emotional_angle": "guilt",
+    "narrative_style": "statement_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "THIS GETS WORSE",
+        "duration": 2
+      },
+      {
+        "image": "nurse_on_phone_ignoring.jpg",
+        "text": "YOU SAW THE SIGNS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "YOU BLAMED YOURSELF",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "SHE NEEDED HELP NOW",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "HELP DIDN'T COME",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "SIMPLE CARE. NOT DONE.",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WE PROVE WHAT HAPPENED",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "EVIDENCE MATTERS",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN YOUR CASE",
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "video_id": "variation_15",
+    "hook_type": "authority",
+    "emotional_angle": "protection",
+    "narrative_style": "question_based",
+    "slides": [
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "BEDSORES ARE PREVENTABLE",
+        "duration": 2
+      },
+      {
+        "image": "unattended_patient.jpg",
+        "text": "WHO PROTECTS HIM?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "WHO PROTECTS HER?",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "NOT THIS SHIFT",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "NOT THAT ROOM",
+        "duration": 1.5
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "INJURY = QUESTIONS",
+        "duration": 1.5
+      },
+      {
+        "image": "nurse_checking_bedsore.jpg",
+        "text": "CARE = REPOSITIONING",
+        "duration": 1.5
+      },
+      {
+        "image": "elderly_wheelchair_window_dark.jpg",
+        "text": "WE STAND WITH FAMILIES",
+        "duration": 2
+      },
+      {
+        "image": "call_now_screen.jpg",
+        "text": "NO FEE UNLESS WE WIN",
+        "duration": 2
+      }
+    ]
+  }
+]</script>
+  <script>
+(function () {
+  var ASSET_BASE = 'assets/nursing-home/';
+  /* Dropped: black_white_elder_drinking (harsh), repositioning (two-staff, confusing). */
+  var IMAGE_POOL = [
+    'daughter_holding_hand.jpg',
+    'nurse_on_phone_ignoring.jpg',
+    'unattended_patient.jpg',
+    'nurse_checking_bedsore.jpg',
+    'call_now_screen.jpg',
+    'elderly_wheelchair_window_dark.jpg'
+  ];
+  /** Fallbacks: max one phone-neglect still per ad (see rewrite-nursing-images.js ODD). */
+  var NARRATIVE_ORDER = [
+    'daughter_holding_hand.jpg',
+    'elderly_wheelchair_window_dark.jpg',
+    'nurse_on_phone_ignoring.jpg',
+    'unattended_patient.jpg',
+    'nurse_checking_bedsore.jpg',
+    'call_now_screen.jpg'
+  ];
+  var POS = ['pos-center'];
+  var ZOOM_LAG = ['', 'cam-zoom-slow--lag1', 'cam-zoom-slow--lag2', 'cam-zoom-slow--lag3'];
+  var variations = JSON.parse(document.getElementById('variations-json').textContent);
+
+  function hashStr(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function mulberry32(seed) {
+    return function () {
+      var t = (seed += 0x6d2b79f5);
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function fallbackQueue(primaryName) {
+    var rest = NARRATIVE_ORDER.filter(function (f) {
+      return f !== primaryName;
+    });
+    var seen = {};
+    var out = [];
+    for (var a = 0; a < rest.length; a++) {
+      if (!seen[rest[a]]) {
+        seen[rest[a]] = 1;
+        out.push(rest[a]);
+      }
+    }
+    for (var b = 0; b < IMAGE_POOL.length; b++) {
+      var f = IMAGE_POOL[b];
+      if (f !== primaryName && !seen[f]) {
+        seen[f] = 1;
+        out.push(f);
+      }
+    }
+    return [primaryName].concat(out);
+  }
+
+  function urlFor(name) {
+    return ASSET_BASE + name;
+  }
+
+  /** Prefer filename that matches slide line; fall back to JSON image */
+  function semanticPrimaryImage(text, jsonImage) {
+    var U = String(text || '')
+      .toUpperCase()
+      .replace(/[‘’]/g, "'");
+    var fb =
+      jsonImage && IMAGE_POOL.indexOf(jsonImage) !== -1 ? jsonImage : IMAGE_POOL[0];
+    var pick = function (name) {
+      return IMAGE_POOL.indexOf(name) !== -1 ? name : fb;
+    };
+    if (/SEE IF YOUR CASE|CLICK TO GET HELP|CLICK TO SEE IF YOU HAVE|CALL NOW|GET HELP TODAY|NO FEE UNLESS|WE WIN YOUR CASE|FREE CASE REVIEW|SPEAK WITH A LAWYER NOW|FREE CASE|STOP SCROLLING|IF YOU.*WATCHING|TALK TO A LAWYER|GET HELP/.test(U)) {
+      return pick('call_now_screen.jpg');
+    }
+    if (/WEREN.T WATCHING|WATCHING|ON PHONES|DISTRACTED|SUPERVISION|EYES OFF|PRIORITIES WRONG|NOT THIS SHIFT|STAFF ON|WHO.S REALLY|THEY IGNORED THE WARNING/.test(U)) {
+      return pick('nurse_on_phone_ignoring.jpg');
+    }
+    if (/LEFT ALONE|LEFT IN PAIN|ALONE IN|NO ONE ANSWERED|NO ONE COMING|WHERE WAS STAFF|UNATTENDED|SILENCE IS|LONG WAIT|NO ONE$|ALONE/.test(U)) {
+      return pick('unattended_patient.jpg');
+    }
+    if (/CHART|WHAT DID THEY WRITE|PAPERWORK|RECORDS DON|CROSS-CHECK|READ BETWEEN|BUILD THE TIMELINE|WE REVIEW THE CHARTS|TIMELINE|THEY KNEW AND DID NOTHING|THEY KNEW AND SAID NOTHING|PAPERWORK IS NOT REAL CARE/.test(U)) {
+      return pick('nurse_checking_bedsore.jpg');
+    }
+    if (/BEDSORE|PRESSURE INJURY|SKIN BREAK|INFECTION RISK|WARNING|DAMAGE ALREADY|THIS WAS PREVENTABLE|PAIN ESCALATES|INJURY =|IT GETS WORSE/.test(U)) {
+      return pick('nurse_checking_bedsore.jpg');
+    }
+    if (/REPOSITION|TURN|MOVING MATTERS|MOVED HER|TURNS WERE|BASIC CARE|SIMPLE CARE|NEEDED TURNS|MOVING HER WAS/.test(U)) {
+      return pick('nurse_checking_bedsore.jpg');
+    }
+    if (/HOLD THEM|MAKE THEM|FIGHT BACK|FORCE ANSWERS|FORCE|ACCOUNTABLE/.test(U)) {
+      return pick('nurse_checking_bedsore.jpg');
+    }
+    if (/INVESTIGATE|FIND OUT WHAT|FIND THE TRUTH|WE FIND|WE FIND WHAT THEY HID|WE PROVE WHAT|PROTECT YOUR|TIME LIMIT|EVIDENCE|DOCUMENT EVERYTHING|WE STAND|DON.T WAIT|ACT BEFORE|OPTIONS|YOU STILL HAVE|WE BUILD|FREE CASE REVIEW|WE FIGHT FOR YOUR|LEGAL HELP FOR ELDER|SERVING LOS ANGELES|SPEAK WITH A LAWYER|LOVED ONE HURT|LOVED ONE INJURED/.test(U)) {
+      return pick('nurse_checking_bedsore.jpg');
+    }
+    if (/GUT KNOWS|SLEEPLESS|WORRIED|GUILTY|NOT YOUR FAULT|ADVOCATE|YOU BLAMED|BRUISES|STORIES THAT DON|THAT.*HURTS|IT HURTS|THIS HAPPENS EVERY DAY/.test(U)) {
+      return pick('elderly_wheelchair_window_dark.jpg');
+    }
+    if (/FAMILY|TRUSTED|DEPENDED ON|BEDSIDE|YOUR MOM|YOUR DAD|SAW THE TRUTH|KEPT CHECKING|YOU SAW/.test(U)) {
+      return pick('daughter_holding_hand.jpg');
+    }
+    if (/SPEAK UP|SHE CAN.T|VULNERABLE|HOLDING|HAND|SHE.S VULNERABLE|DESERVED IT/.test(U)) {
+      return pick('daughter_holding_hand.jpg');
+    }
+    if (/BEDSORES?|BEDSORES ARE|STANDARD OF CARE|THEY SAID DON.T WORRY|THEY SAID SHE WAS FINE/.test(U)) {
+      return pick('nurse_checking_bedsore.jpg');
+    }
+    if (/WHEELCHAIR|WINDOW|IS SHE SAFE|NOT NORMAL|DOESN.T FIX|THIS GETS WORSE|RED FLAGS|ISOLATION|THIS SHOULD NOT HAPPEN/.test(U)) {
+      return pick('elderly_wheelchair_window_dark.jpg');
+    }
+    return fb;
+  }
+
+  function wireImg(img, primaryName) {
+    var names = fallbackQueue(primaryName);
+    var urls = names.map(urlFor);
+    var ix = 0;
+    img.draggable = false;
+    img.alt = '';
+    img.decoding = 'async';
+    img.onerror = function () {
+      ix++;
+      if (ix < urls.length) {
+        img.src = urls[ix];
+      } else {
+        img.style.opacity = '0';
+      }
+    };
+    img.src = urls[0];
+  }
+
+  function slideTimingBucket(index, n) {
+    if (n <= 1) return 'cta';
+    if (index === n - 1) return 'cta';
+    if (index < 2) return 'open';
+    if (index >= n - 2) return 'close';
+    return 'mid';
+  }
+
+  /** Slower, tighter bands; CTA slide longest (2.4–3.0s) */
+  function structuredDuration(base, index, n, rng) {
+    var bucket = slideTimingBucket(index, n);
+    var t;
+    if (bucket === 'cta') t = 2.52 + rng() * 0.38;
+    else if (bucket === 'close') t = 2.28 + rng() * 0.18;
+    else if (bucket === 'open') t = 2.22 + rng() * 0.34;
+    else t = 1.8 + rng() * 0.38;
+    var anchor = typeof base === 'number' && base > 0 ? base : 1.85;
+    t += (anchor - 1.85) * 0.035;
+    if (bucket === 'cta') {
+      t = Math.min(3.0, Math.max(2.4, t));
+    } else {
+      t = Math.min(2.62, Math.max(1.78, t));
+    }
+    return Math.round(t * 1000) / 1000;
+  }
+
+  /** Odd count → strict TEXT/IMAGE/…/TEXT with no doubled types at end */
+  function enforceOddSlideCount(slides) {
+    var a = slides.slice();
+    while (a.length >= 2 && (a.length % 2 === 0)) {
+      a.splice(a.length - 2, 1);
+    }
+    return a;
+  }
+
+  /** Cap at 7 slides; spread picks across full story arc */
+  function selectSlides(slides) {
+    var n = slides.length;
+    if (n <= 7) return slides.slice();
+    var want = 7;
+    var picked = [];
+    var seen = {};
+    for (var k = 0; k < want; k++) {
+      var idx = Math.round((k / (want - 1)) * (n - 1));
+      if (!seen[idx]) {
+        seen[idx] = 1;
+        picked.push(slides[idx]);
+      }
+    }
+    var p = 0;
+    while (picked.length < 5 && p < n) {
+      if (!seen[p]) {
+        seen[p] = 1;
+        picked.push(slides[p]);
+      }
+      p++;
+    }
+    return picked;
+  }
+
+  /** TEXT → IMAGE → … (requires odd slide count; last is text / CTA) */
+  function slideIsTextOnly(index, n) {
+    return index % 2 === 0;
+  }
+
+  function clampWords(text, maxWords) {
+    var parts = String(text || '')
+      .trim()
+      .split(/\s+/)
+      .filter(function (w) {
+        return w.length > 0;
+      });
+    if (parts.length <= maxWords) return parts.join(' ');
+    return parts.slice(0, maxWords).join(' ');
+  }
+
+  function createCtaWordmark() {
+    var w = document.createElement('div');
+    w.className = 'logo-cta';
+    w.setAttribute('role', 'img');
+    w.setAttribute('aria-label', 'Insider Lawyers');
+    var inner = document.createElement('div');
+    inner.className = 'logo-inner';
+    var l1 = document.createElement('div');
+    l1.className = 'logo-line logo-line--brand';
+    l1.setAttribute('aria-hidden', 'true');
+    l1.textContent = 'INSIDER';
+    var l2 = document.createElement('div');
+    l2.className = 'logo-line logo-line--trademark';
+    l2.setAttribute('aria-hidden', 'true');
+    l2.textContent = 'LAWYERS';
+    inner.appendChild(l1);
+    inner.appendChild(l2);
+    w.appendChild(inner);
+    return w;
+  }
+
+  function fillCaption(el, text, posClass, maxWords) {
+    var mw = typeof maxWords === 'number' && maxWords > 0 ? maxWords : 5;
+    var shortText = clampWords(text, mw);
+    if (posClass !== 'pos-split') {
+      el.textContent = shortText;
+      return;
+    }
+    var parts = shortText.trim().split(/\s+/);
+    var a;
+    var b;
+    if (parts.length === 1 && parts[0].length > 4) {
+      var c = (parts[0].length / 2) | 0;
+      a = parts[0].slice(0, c);
+      b = parts[0].slice(c);
+    } else {
+      var mid = Math.max(1, (parts.length / 2) | 0);
+      a = parts.slice(0, mid).join(' ');
+      b = parts.slice(mid).join(' ');
+    }
+    var s1 = document.createElement('span');
+    s1.className = 'ln';
+    s1.textContent = a;
+    var s2 = document.createElement('span');
+    s2.className = 'ln';
+    s2.textContent = b;
+    el.appendChild(s1);
+    el.appendChild(s2);
+  }
+
+  function buildCard(v, videoIndex) {
+    var rng = mulberry32(hashStr(v.video_id + ':' + videoIndex));
+    var slides = enforceOddSlideCount(selectSlides(v.slides));
+    var n = slides.length;
+    if (n < 1) return;
+    var durations = [];
+    var card = document.createElement('article');
+    card.className = 'card';
+    var els = [];
+    for (var s = 0; s < n; s++) {
+      var rngS = mulberry32(hashStr(v.video_id + '#' + s + '#' + videoIndex));
+      var slide = slides[s];
+      var textOnly = slideIsTextOnly(s, n);
+      var el = document.createElement('div');
+      el.className = 'slide slide--' + (textOnly ? 'text' : 'image') + (s === 0 ? ' on' : '');
+      var layer = document.createElement('div');
+      layer.className = 'layer';
+      if (!textOnly) {
+        var pic = document.createElement('img');
+        var imIdx = (s - 1) / 2 | 0;
+        pic.className = 'cam-zoom-slow' + (ZOOM_LAG[imIdx] ? ' ' + ZOOM_LAG[imIdx] : '');
+        wireImg(pic, semanticPrimaryImage(slide.text, slide.image));
+        layer.appendChild(pic);
+      }
+      durations.push(structuredDuration(slide.duration, s, n, rngS));
+      el.appendChild(layer);
+      if (textOnly) {
+        var pos = POS[0];
+        var cta = s === n - 1;
+        var cap = document.createElement('div');
+        cap.className = 'cap cap-text-only' + (cta ? ' cap-cta' : '');
+        if (cta) {
+          var ctaCopy = document.createElement('div');
+          ctaCopy.className = 'cap-cta__copy';
+          fillCaption(ctaCopy, slide.text, pos, 10);
+          var ctaLa = document.createElement('p');
+          ctaLa.className = 'cap-cta__la';
+          ctaLa.textContent = 'Los Angeles nursing home neglect attorneys';
+          var ctaDisclaimer = document.createElement('p');
+          ctaDisclaimer.className = 'cap-cta__disclaimer';
+          ctaDisclaimer.textContent =
+            'Attorney advertising. This is not legal advice. Past results do not guarantee, warrant, or predict a similar outcome. No attorney-client relationship is formed from viewing this ad. California attorneys. Additional terms, fees, and conditions may apply to any representation.';
+          cap.appendChild(ctaCopy);
+          cap.appendChild(ctaLa);
+          cap.appendChild(createCtaWordmark());
+          cap.appendChild(ctaDisclaimer);
+        } else {
+          fillCaption(cap, slide.text, pos, 5);
+        }
+        el.appendChild(cap);
+      }
+      card.appendChild(el);
+      els.push(el);
+    }
+    document.body.appendChild(card);
+    var i = 0;
+    function microPauseMs() {
+      return 80 + ((rng() * 41) | 0);
+    }
+    function advance() {
+      i = (i + 1) % n;
+      for (var j = 0; j < els.length; j++) els[j].classList.toggle('on', j === i);
+      setTimeout(advance, durations[i] * 1000 + microPauseMs());
+    }
+    setTimeout(advance, durations[0] * 1000 + microPauseMs());
+  }
+
+  for (var k = 0; k < variations.length; k++) buildCard(variations[k], k);
+})();
+  </script>
+</body>
+</html>
