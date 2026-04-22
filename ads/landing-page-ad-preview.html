@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1080, height=1920">
+  <title>Insider — 15s ad preview (9:16)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #01366c;
+      --slate: #0c2334;
+      --gold: #fbba00;
+      --gold2: #ffbf00;
+      --goldShadow: #cc9900;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      background: #111;
+      font-family: 'Inter', 'Poppins', sans-serif;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .frame {
+      width: 1080px;
+      height: 1920px;
+      max-width: calc(100vw - 32px);
+      max-height: calc((100vw - 32px) * 1920 / 1080);
+      aspect-ratio: 1080 / 1920;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      border-radius: 8px;
+    }
+    .stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, var(--slate) 0%, var(--navy) 100%);
+    }
+    .scene {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 80px;
+      text-align: center;
+    }
+    .h {
+      font-family: 'Poppins', 'Inter', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      line-height: 1.05;
+    }
+    .s1 .h { font-size: 160px; }
+    .s1 .rule {
+      height: 10px;
+      width: 0;
+      background: var(--gold);
+      margin-top: 40px;
+      border-radius: 4px;
+    }
+    .card {
+      background: #fff;
+      color: #1f2937;
+      border-radius: 16px;
+      border: 2px solid rgba(1, 54, 108, 0.18);
+      box-shadow: 0 18px 36px rgba(0,0,0,0.35);
+      padding: 40px;
+      width: 760px;
+      max-width: 90%;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 22px 10px;
+      font-weight: 700;
+      font-size: 44px;
+      color: #1f2937;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .row.on {
+      opacity: 1;
+      transform: none;
+      transition: all 0.35s ease;
+    }
+    .box {
+      width: 52px;
+      height: 52px;
+      border: 3px solid #6b7280;
+      border-radius: 10px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .row.on .box { background: var(--navy); border-color: var(--navy); }
+    .row.on .box::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 8px;
+      width: 12px;
+      height: 24px;
+      border: solid #fff;
+      border-width: 0 4px 4px 0;
+      transform: rotate(45deg);
+    }
+    .gold-left {
+      border-left: 8px solid var(--gold);
+      padding-left: 20px;
+      border-radius: 6px;
+    }
+    .pill {
+      position: absolute;
+      top: 140px;
+      right: 80px;
+      background: #fff;
+      color: var(--navy);
+      font-weight: 800;
+      padding: 18px 26px;
+      border-radius: 999px;
+      font-size: 32px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+      opacity: 0;
+    }
+    .pill .dot {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: #dc2626;
+      border-radius: 50%;
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+    .s2 .h, .s3 .h { font-size: 96px; margin-bottom: 40px; }
+    .cta-btn {
+      background: var(--gold2);
+      color: var(--navy);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      border-radius: 16px;
+      padding: 44px 60px;
+      box-shadow: 0 12px 0 var(--goldShadow), 0 20px 40px rgba(0,0,0,0.45);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .cta-btn .lbl { font-size: 44px; letter-spacing: 0.08em; }
+    .cta-btn .num {
+      font-size: 128px;
+      font-weight: 800;
+      line-height: 1;
+      margin-top: 12px;
+      letter-spacing: 0.03em;
+    }
+    .cta-sub {
+      margin-top: 36px;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 44px;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .cta-micro {
+      margin-top: 16px;
+      color: rgba(255,255,255,0.75);
+      font-size: 30px;
+      letter-spacing: 0.05em;
+    }
+    @keyframes fi { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+    @keyframes fo { to { opacity: 0; } }
+    @keyframes rule { to { width: 420px; } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+    .s1 { animation: fi 0.35s 0.05s both, fo 0.3s 3s both; }
+    .s1 .rule { animation: rule 0.6s 1.2s both; }
+    .s2 { animation: fi 0.35s 3.05s both, fo 0.3s 8s both; }
+    .s2 .r1 { animation: fi 0.35s 3.6s both; }
+    .s2 .r2 { animation: fi 0.35s 4.4s both; }
+    .s2 .pill { animation: fi 0.35s 5.2s both; }
+    .s3 { animation: fi 0.35s 8.05s both, fo 0.3s 12s both; }
+    .s3 .r1 { animation: fi 0.3s 8.5s both; }
+    .s3 .r2 { animation: fi 0.3s 9.1s both; }
+    .s3 .r3 { animation: fi 0.3s 9.7s both; }
+    .s3 .r4 { animation: fi 0.3s 10.3s both; }
+    .s4 { animation: fi 0.4s 12.05s both; }
+    .s4 .cta-btn { animation: pulse 1.6s 13s infinite; }
+
+    .hint {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: #888;
+      text-align: center;
+      max-width: 90%;
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="stage">
+      <div class="scene s1">
+        <div class="h">NOT NORMAL<br>AGING</div>
+        <div class="rule"></div>
+      </div>
+      <div class="scene s2">
+        <div class="h">MISSED CARE</div>
+        <div class="card">
+          <div class="row r1 on"><span class="box"></span>MISSED CARE</div>
+          <div class="row r2 on"><span class="box"></span>WORSENING CONDITION</div>
+        </div>
+        <div class="pill"><span class="dot"></span>3 missed calls</div>
+      </div>
+      <div class="scene s3">
+        <div class="h">NEGLECT PATTERN</div>
+        <div class="card">
+          <div class="row r1 on"><span class="box"></span>Bed sores</div>
+          <div class="row r2 on"><span class="box"></span>Stage 3–4</div>
+          <div class="row r3 on"><span class="box"></span>Infection ignored</div>
+          <div class="row r4 on gold-left"><span class="box"></span>Hospital transfer</div>
+        </div>
+      </div>
+      <div class="scene s4">
+        <div class="cta-btn">
+          <div class="lbl">CALL NOW</div>
+          <div class="num">844-467-4335</div>
+        </div>
+        <div class="cta-sub">Free consultation<br>No fee unless we win</div>
+        <div class="cta-micro">24/7 • Hablamos Español</div>
+      </div>
+    </div>
+  </div>
+  <p class="hint">Open this file in Chrome/Edge. For exact 9:16 capture, use DevTools (F12) → device toolbar → 1080×1920.</p>
+</body>
+</html>

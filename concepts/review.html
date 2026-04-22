@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>15 DR concepts — production ad engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-navy: #01366c;
+      --brand-blue: #01468a;
+      --brand-yellow: #fbba00;
+      --brand-gold: #ffbf00;
+      --bg-page: #07070a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg-page);
+      color: var(--text);
+      line-height: 1.35;
+      padding: clamp(16px, 4vw, 28px);
+      padding-bottom: 88px;
+    }
+    a { color: #7cb3ff; }
+    .wrap { max-width: 400px; margin: 0 auto; }
+    nav.top { margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #27272a; }
+    h1.page { font-size: 1.15rem; font-weight: 900; letter-spacing: -0.03em; }
+    p.sub { color: var(--muted); font-size: 0.8rem; margin-top: 6px; line-height: 1.45; }
+    .timeline-legend {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin: 14px 0 18px;
+      padding: 10px 12px;
+      background: linear-gradient(145deg, #12121a, #0c0c10);
+      border-radius: 10px;
+      border: 1px solid #2a2a32;
+    }
+    .concept-block { margin-bottom: 36px; scroll-margin-top: 12px; }
+    .concept-head { margin-bottom: 8px; }
+    .concept-head .tag {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand-yellow);
+      font-weight: 800;
+    }
+    .concept-head h2 {
+      font-family: Poppins, Inter, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #fff;
+      margin-top: 4px;
+      letter-spacing: -0.02em;
+    }
+    /* Device frame */
+    .concept-player {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto;
+      padding: 10px;
+      border-radius: 28px;
+      background: linear-gradient(165deg, #2a2a32 0%, #0f0f12 40%, #18181c 100%);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.07),
+        0 24px 56px rgba(0,0,0,0.65),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .concept-player::after {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border-radius: 22px;
+      pointer-events: none;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35);
+      z-index: 0;
+    }
+    .stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #000;
+      z-index: 1;
+    }
+    .stage__bg {
+      position: absolute;
+      inset: -8%;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+    .stage__bg.is-on { opacity: 1; }
+    .stage__bg.is-hero {
+      background-image: linear-gradient(145deg, rgba(1,54,108,0.88), rgba(12,35,52,0.82)),
+        url('https://call.insideraccidentlawyers.com/images/la/hero-bg.webp');
+    }
+    .stage__bg.is-navy {
+      background: radial-gradient(ellipse 120% 80% at 50% 20%, rgba(251,186,0,0.12) 0%, transparent 50%),
+        linear-gradient(165deg, #0c2334 0%, var(--brand-navy) 50%, #030d18 100%);
+    }
+    .stage__bg.is-red {
+      background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(220,38,38,0.25) 0%, transparent 45%),
+        linear-gradient(180deg, #2a0a0a 0%, #1a0505 55%, #050508 100%);
+    }
+    .stage__bg.kb-pause { animation-play-state: paused; }
+    .stage__bg.is-on.is-hero { animation: kenBurns 28s ease-in-out infinite alternate; }
+    @keyframes kenBurns {
+      0% { transform: scale(1.08) translate(0, 0); }
+      100% { transform: scale(1.2) translate(-2%, -1%); }
+    }
+    .stage__sweep {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(ellipse 80% 50% at 50% 120%, transparent 40%, rgba(251,186,0,0.07) 55%, transparent 70%);
+      animation: sweepGlow 6s ease-in-out infinite;
+      mix-blend-mode: screen;
+    }
+    @keyframes sweepGlow {
+      0%, 100% { opacity: 0.4; transform: translateY(0); }
+      50% { opacity: 0.85; transform: translateY(-6%); }
+    }
+    .stage__vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.75);
+      z-index: 2;
+    }
+    .brand-watermark {
+      position: absolute;
+      bottom: 36px;
+      right: 10px;
+      z-index: 6;
+      opacity: 0.22;
+      pointer-events: none;
+    }
+    .brand-watermark img {
+      height: 22px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+    .accent-bar {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 22%;
+      width: 0;
+      max-width: 88%;
+      height: 4px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, transparent, var(--brand-yellow), transparent);
+      opacity: 0.85;
+      z-index: 3;
+      pointer-events: none;
+      animation: barSweep 2.2s ease-in-out infinite;
+    }
+    @keyframes barSweep {
+      0% { width: 0; opacity: 0; }
+      25% { width: 78%; opacity: 1; }
+      100% { width: 88%; opacity: 0.4; }
+    }
+    .slide-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 4.5vw, 26px);
+      text-align: center;
+    }
+    .slide-content {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      padding: 0 6px;
+      z-index: 2;
+    }
+    .slide-content.parallax-nudge {
+      animation: parallaxFloat 3.5s ease-in-out infinite alternate;
+    }
+    @keyframes parallaxFloat {
+      from { transform: translateY(0); }
+      to { transform: translateY(-4px); }
+    }
+    .line {
+      font-weight: 900;
+      font-size: clamp(1.18rem, 5.2vw, 1.62rem);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 0.28em;
+      -webkit-text-stroke: 0.45px rgba(0,0,0,0.85);
+      text-shadow:
+        0 0 24px rgba(0,0,0,0.9),
+        0 4px 20px rgba(0,0,0,0.55),
+        0 0 40px rgba(1,54,108,0.35);
+    }
+    .line:last-child { margin-bottom: 0; }
+    .line.accent .w,
+    .line.accent {
+      color: var(--brand-yellow);
+      text-shadow:
+        0 0 20px rgba(251,186,0,0.45),
+        0 0 40px rgba(251,186,0,0.2),
+        0 4px 18px rgba(0,0,0,0.65);
+    }
+    .line.small, .line.small .w {
+      font-size: clamp(0.88rem, 3.8vw, 1.05rem);
+      font-weight: 800;
+      text-transform: none;
+      letter-spacing: 0.01em;
+    }
+    .stagger-wrap {
+      display: inline-block;
+    }
+    .stagger-wrap .w {
+      display: inline-block;
+      opacity: 0;
+      animation: wordPop 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: var(--d, 0s);
+    }
+    @keyframes wordPop {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.92);
+        filter: blur(2px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+    .line.flicker {
+      animation: textFlicker 3.2s ease-in-out infinite;
+    }
+    @keyframes textFlicker {
+      0%, 100% { opacity: 1; }
+      48% { opacity: 0.97; }
+      50% { opacity: 0.88; }
+      52% { opacity: 0.98; }
+    }
+    .phone {
+      display: block;
+      margin-top: 14px;
+      font-family: Poppins, sans-serif;
+      font-size: clamp(1.55rem, 7.5vw, 2.15rem);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      color: var(--brand-gold);
+      -webkit-text-stroke: 0.5px rgba(0,0,0,0.5);
+      text-shadow: 0 3px 0 #8a5a00, 0 0 28px rgba(251,186,0,0.55);
+      animation: phoneCTA 1.2s ease-in-out infinite;
+    }
+    @keyframes phoneCTA {
+      0%, 100% { transform: scale(1) translateY(0); filter: brightness(1); }
+      50% { transform: scale(1.06) translateY(-3px); filter: brightness(1.1); }
+    }
+    .cta-block {
+      margin-top: 8px;
+    }
+    .cta-line {
+      font-size: clamp(0.75rem, 3.2vw, 0.88rem);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.92);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+    .cta-line.gold {
+      color: var(--brand-yellow);
+      text-shadow: 0 0 16px rgba(251,186,0,0.35);
+    }
+    .logo-strip { margin-top: 12px; opacity: 0.95; }
+    .logo-strip img {
+      height: 26px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+    .flash-burst {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .flash-burst.on {
+      animation: flashPop 0.14s ease-out forwards;
+    }
+    @keyframes flashPop {
+      0% { opacity: 0.92; }
+      100% { opacity: 0; }
+    }
+    /* Motion presets */
+    .slide-content.motion-impact {
+      animation: impactOvershoot 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    .slide-content.motion-impact .line {
+      animation: shakeSubtle 0.45s ease-out 0.05s;
+    }
+    @keyframes impactOvershoot {
+      0% { opacity: 1; transform: scale(0.9); }
+      55% { transform: scale(1.15); }
+      100% { transform: scale(1.05); }
+    }
+    @keyframes shakeSubtle {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-2px); }
+      75% { transform: translateX(2px); }
+    }
+    .slide-content.motion-fade {
+      animation: fadeSnap 0.38s ease-out forwards;
+    }
+    @keyframes fadeSnap {
+      from { opacity: 0; transform: translateY(12px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1.02); }
+    }
+    .slide-content.motion-zoom {
+      animation: zoomPunch 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes zoomPunch {
+      from { opacity: 0; transform: scale(0.82); }
+      to { opacity: 1; transform: scale(1.06); }
+    }
+    .slide-content.motion-cut {
+      opacity: 1;
+      transform: scale(1.03);
+      animation: cutSnap 0.06s steps(1) forwards;
+    }
+    @keyframes cutSnap {
+      from { opacity: 0.01; }
+      to { opacity: 1; }
+    }
+    .slide-content.motion-slide-up {
+      animation: slideUpIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes slideUpIn {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .slide-content.motion-slide-left {
+      animation: slideLeftIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes slideLeftIn {
+      from { opacity: 0; transform: translateX(36px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .slide-content.motion-glitch {
+      animation: glitchIn 0.35s ease-out forwards;
+    }
+    @keyframes glitchIn {
+      0% { opacity: 0; transform: translate(4px, -2px); filter: hue-rotate(90deg) contrast(1.2); }
+      30% { opacity: 1; transform: translate(-3px, 1px); }
+      60% { transform: translate(2px, -1px); filter: none; }
+      100% { opacity: 1; transform: translate(0, 0); }
+    }
+    .slide-content.exit-fade { animation: exitFade 0.28s ease-in forwards; }
+    @keyframes exitFade {
+      to { opacity: 0; transform: translateY(-10px) scale(0.96); }
+    }
+    .slide-content.exit-cut { opacity: 0; transition: opacity 0.05s linear; }
+    .slide-content.exit-zoom { animation: exitZoom 0.26s ease-in forwards; }
+    @keyframes exitZoom {
+      to { opacity: 0; transform: scale(1.14); }
+    }
+    .slide-content.exit-slide { animation: exitSlide 0.28s ease-in forwards; }
+    @keyframes exitSlide {
+      to { opacity: 0; transform: translateY(-18px); }
+    }
+    .progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      z-index: 8;
+      border-radius: 0 0 18px 18px;
+      overflow: hidden;
+    }
+    .progress__bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 0 2px 2px 0;
+      background: linear-gradient(90deg, var(--brand-navy), var(--brand-yellow), #fff);
+      box-shadow: 0 0 12px rgba(251,186,0,0.45);
+      transition: width 0.08s ease-out;
+    }
+    .phase-label {
+      position: absolute;
+      top: 8px;
+      left: 6px;
+      right: 6px;
+      z-index: 7;
+      display: flex;
+      justify-content: space-between;
+      gap: 2px;
+      font-size: 0.52rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      pointer-events: none;
+    }
+    .phase-label span.on {
+      color: var(--brand-yellow);
+      text-shadow: 0 0 8px rgba(251,186,0,0.35);
+    }
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 14px;
+      position: relative;
+      z-index: 2;
+    }
+    .controls button {
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 11px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, #2a2a32, #1a1a1f);
+      color: #fafafa;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      transition: transform 0.12s ease, box-shadow 0.2s, background 0.2s;
+    }
+    .controls button:hover {
+      background: linear-gradient(180deg, #36363f, #222228);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    }
+    .controls button:active {
+      transform: scale(0.94);
+    }
+    code.path {
+      display: block;
+      margin-top: 28px;
+      padding: 12px;
+      background: #0c0c0e;
+      border-radius: 8px;
+      font-size: 0.68rem;
+      color: var(--muted);
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top">
+      <a href="index.html">← Concept list</a> · <a href="../index.html">Video lab home</a>
+    </nav>
+    <h1 class="page">15 concepts — production ad engine</h1>
+    <p class="sub">30s loop · Hook → Problem → Agitation → Solution → CTA · Staggered type · Ken Burns · 844-467-4335</p>
+    <p class="timeline-legend">
+      <strong>Structure:</strong> Hook 0–2s · Problem 2–8s · Agitation 8–16s · Solution 16–22s · CTA 22–30s · 15 slides × ~2s (variable pacing).
+    </p>
+    <div id="players-mount"></div>
+    <code class="path">file:///C:/Users/georgea/nursing-home-video-lab/concepts/review.html</code>
+  </div>
+
+  <script>
+(function () {
+  'use strict';
+
+  var PHONE = '844-467-4335';
+  var SLIDE_MS = 2000;
+  var TOTAL_MS = 30000;
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function lineToStaggeredHTML(line, opts) {
+    opts = opts || {};
+    var cls = 'line' + (opts.accent ? ' accent' : '') + (opts.flicker ? ' flicker' : '');
+    if (line.length > 48 && !opts.noSmall) cls += ' small';
+    var words = String(line).trim().split(/\s+/).filter(Boolean);
+    var inner = words.map(function (w, i) {
+      return '<span class="w" style="--d:' + (i * 0.065) + 's">' + escapeHtml(w) + '</span>';
+    }).join(' ');
+    return '<p class="' + cls + '"><span class="stagger-wrap">' + inner + '</span></p>';
+  }
+
+  function linesToSlideHTML(lines, opts) {
+    opts = opts || {};
+    var html = '<div class="slide-content' + (opts.parallax ? ' parallax-nudge' : '') + '">';
+    var logoDone = false;
+    lines.forEach(function (line, i) {
+      var digits = String(line).replace(/\D/g, '');
+      if (digits === '8444674335') {
+        html += '<span class="phone">' + PHONE + '</span>';
+        html += '<div class="cta-block">';
+        html += '<div class="cta-line gold">FREE CASE REVIEW</div>';
+        html += '<div class="cta-line">NO FEE UNLESS WE WIN</div>';
+        html += '<div class="cta-line">LOS ANGELES • LOCAL</div>';
+        html += '</div>';
+        if (opts.logo) {
+          html += '<div class="logo-strip"><img src="https://call.insideraccidentlawyers.com/images/la/logo.webp" alt="" width="120" height="32" loading="lazy"></div>';
+          logoDone = true;
+        }
+        return;
+      }
+      html += lineToStaggeredHTML(line, { accent: opts.accent && i === 0, flicker: opts.flicker });
+    });
+    if (opts.logo && !logoDone) {
+      html += '<div class="logo-strip"><img src="https://call.insideraccidentlawyers.com/images/la/logo.webp" alt="" width="120" height="32" loading="lazy"></div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  /**
+   * Phases: hook (1 slide), problem (3), agitation (4), solution (3), cta (4) = 15 slides
+   * Transitions by phase + hookFlash flag
+   */
+  function buildSlides(parts, conceptIndex) {
+    var slides = [];
+    var ci = conceptIndex || 0;
+    var useFlashHook = ci % 2 === 1;
+
+    function push(config) {
+      slides.push({
+        ms: config.ms != null ? config.ms : SLIDE_MS,
+        transition: config.transition,
+        bg: config.bg,
+        html: config.html,
+        phase: config.phase,
+        flash: !!config.flash
+      });
+    }
+
+    push({
+      phase: 'hook',
+      transition: useFlashHook ? 'flash' : 'impact',
+      bg: 'hero',
+      flash: useFlashHook,
+      html: linesToSlideHTML(parts.hookLines, { accent: true })
+    });
+
+    var probTrans = ['cut', 'cut', 'slide-up'];
+    parts.problem.forEach(function (line, i) {
+      push({
+        phase: 'problem',
+        transition: probTrans[i] || 'cut',
+        bg: 'navy',
+        html: linesToSlideHTML([line])
+      });
+    });
+
+    var agitTrans = ['glitch', 'slide-up', 'slide-left', 'glitch'];
+    parts.agitation.forEach(function (line, i) {
+      push({
+        phase: 'agitation',
+        transition: agitTrans[i] || 'slide-up',
+        bg: i % 2 ? 'red' : 'hero',
+        ms: i === 1 ? 2100 : SLIDE_MS,
+        html: linesToSlideHTML([line], { flicker: i === 2 })
+      });
+    });
+
+    var solTrans = ['slide-left', 'fade', 'zoom'];
+    parts.solution.forEach(function (line, i) {
+      push({
+        phase: 'solution',
+        transition: solTrans[i] || 'fade',
+        bg: 'navy',
+        html: linesToSlideHTML([line])
+      });
+    });
+
+    var ctaTrans = ['zoom', 'fade', 'fade', 'zoom'];
+    parts.cta.forEach(function (line, idx) {
+      var isPhone = String(line).replace(/\D/g, '') === '8444674335';
+      push({
+        phase: 'cta',
+        transition: ctaTrans[idx] || 'fade',
+        bg: idx >= 2 ? 'navy' : 'hero',
+        ms: isPhone ? 2400 : (idx === 0 ? 1900 : SLIDE_MS),
+        html: linesToSlideHTML([line], { logo: idx === parts.cta.length - 1 })
+      });
+    });
+
+    return slides;
+  }
+
+  function phaseAtElapsed(ms) {
+    if (ms < 2000) return 0;
+    if (ms < 8000) return 1;
+    if (ms < 16000) return 2;
+    if (ms < 22000) return 3;
+    return 4;
+  }
+
+  var CONCEPTS = [
+    { id: 'c01', tag: 'Shock / fear', title: '1 — The Photo Nobody Wants to See', parts: {
+      hookLines: ['BEDSORES?', 'STOP SCROLLING.'],
+      problem: ['NOT “NORMAL AGING.”', 'NEGLECT HIDES IN PLAIN SIGHT.', 'SOMETHING’S OFF.'],
+      agitation: ['THEY MAY HAVE KNOWN.', 'GETTING WORSE—not better.', 'YOU’RE NOT CRAZY.', 'PATTERNS DON’T LIE.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'REAL ATTORNEYS. REAL ANSWERS.', 'FREE REVIEW. NO UPFRONT FEE.'],
+      cta: ['CALL NOW—FREE CASE REVIEW', PHONE, 'NO FEE UNLESS WE WIN', 'LOS ANGELES']
+    }},
+    { id: 'c02', tag: 'Confusion', title: '2 — Why Does It Keep Getting Worse?', parts: {
+      hookLines: ['KEEPS GETTING WORSE…', 'THAT’S NOT “CARE.”'],
+      problem: ['ROUTINE SHOULDN’T MEAN DECLINE.', 'BRUISES. FALLS. STORIES SHIFT.', 'SOMETHING’S OFF.'],
+      agitation: ['YOU’RE NOT IMAGINING IT.', 'YOUR GUT IS DATA.', 'THEY MAY HAVE KNOWN.', 'YOU CAN ACT NOW.'],
+      solution: ['WE INVESTIGATE NURSING HOME CASES.', 'THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'START WITH ONE CALL.'],
+      cta: ['FREE CONSULTATION', PHONE, 'BED SORES • NEGLECT • LA', 'TAP TO CALL']
+    }},
+    { id: 'c03', tag: 'Outrage', title: '3 — Paid to Protect. Didn’t.', parts: {
+      hookLines: ['YOU PAID FOR SAFETY.', 'WHAT DID YOU GET?'],
+      problem: ['NEGLECT ISN’T ALWAYS LOUD.', 'UNANSWERED CALLS.', 'UNEXPLAINED WOUNDS.'],
+      agitation: ['THEY MAY HAVE KNOWN.', 'YOU’RE NOT CRAZY TO ASK.', 'GETTING WORSE = RED FLAG.', 'SILENCE ISN’T CARE.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'WE HOLD FACILITIES ACCOUNTABLE.', 'LOS ANGELES • SERIOUS CASES.'],
+      cta: ['FREE CASE REVIEW', PHONE, 'AVAILABLE 24/7', 'CALL NOW']
+    }},
+    { id: 'c04', tag: 'iMessage', title: '4 — Read This Thread', parts: {
+      hookLines: ['“IT’S FINE.”', 'IT’S NOT.'],
+      problem: ['NEW BRUISE. NEW EXCUSE.', 'WEIGHT DROPS. STORY SHIFTS.', 'BEDSORES DON’T “JUST HAPPEN.”'],
+      agitation: ['YOU’RE NOT OVERREACTING.', 'SOMETHING’S OFF.', 'THEY MAY HAVE KNOWN.', 'YOU CAN ACT NOW.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'HELP—NOT JARGON.', 'FREE CASE REVIEW.'],
+      cta: [PHONE, 'NO FEE UNLESS WE WIN', 'NURSING HOME • LA', 'CALL NOW']
+    }},
+    { id: 'c05', tag: 'POV', title: '5 — I Should’ve Asked Sooner', parts: {
+      hookLines: ['I WAS “OVERREACTING.”', 'I WASN’T.'],
+      problem: ['SIGNS WERE THERE.', 'SMALL CHANGES ADD UP.', 'WAITING MADE IT WORSE.'],
+      agitation: ['YOU’RE NOT CRAZY.', 'REGRET IS LOUD.', 'SOMETHING’S OFF—TRUST IT.', 'YOU CAN ACT NOW.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'STILL TIME TO PROTECT THEM.', 'FREE REVIEW.'],
+      cta: ['TELL US WHAT YOU SAW', PHONE, 'ELDER ABUSE • NEGLECT', 'CALL NOW']
+    }},
+    { id: 'c06', tag: 'Family', title: '6 — Dad Wouldn’t Want This', parts: {
+      hookLines: ['NOT DRAMA.', 'PROTECTION.'],
+      problem: ['BEDSORES. BRUISING. FEAR.', 'YOU CAN’T GET DAYS BACK.', 'BUT YOU CAN ACT.'],
+      agitation: ['YOU’RE NOT CRAZY FOR CARING.', 'THEY MAY HAVE KNOWN.', 'SOMETHING’S OFF.', 'FIGHT FOR THEM—NOW.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'LA COUNTY • SERIOUS NEGLECT.', 'INSIDER ACCIDENT LAWYERS.'],
+      cta: ['FREE CONSULTATION', PHONE, 'WILSHIRE • LOS ANGELES', 'CALL NOW']
+    }},
+    { id: 'c07', tag: 'Education', title: '7 — 3 Things They Hope You Never Google', parts: {
+      hookLines: ['3 THINGS', 'YOU LEARN LATE'],
+      problem: ['BEDSORES = FAILED REPOSITIONING.', 'BRUISES + LYING STORIES.', 'RECORDS MAY EXIST.'],
+      agitation: ['THEY MAY HAVE KNOWN.', 'GOOGLE ISN’T ENOUGH.', 'YOU’RE NOT CRAZY.', 'YOU CAN ACT NOW.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'WE WORK WITH EXPERTS.', 'FREE CASE EVALUATION.'],
+      cta: ['NURSING HOME LAWYER • LA', PHONE, 'NO FEE UNLESS WE WIN', 'CALL NOW']
+    }},
+    { id: 'c08', tag: 'Quiz', title: '8 — Answer Yes or No', parts: {
+      hookLines: ['UNEXPLAINED INJURY?', 'YES OR NO.'],
+      problem: ['SUDDEN DECLINE?', 'STORIES DON’T MATCH?', 'ANY YES = SIGNAL.'],
+      agitation: ['THAT’S NOT “DRAMA.”', 'SOMETHING’S OFF.', 'YOU’RE NOT CRAZY.', 'DOCUMENT—THEN CALL.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'REAL ATTORNEYS • LA.', 'FREE REVIEW.'],
+      cta: ['CALL NOW', PHONE, 'NO FEE UNLESS WE WIN', 'TAP TO CALL']
+    }},
+    { id: 'c09', tag: 'Story', title: '9 — The Weekend Visit', parts: {
+      hookLines: ['SUNDAY VISIT.', 'ONE DETAIL OFF.'],
+      problem: ['THEN IT CLICKED.', 'NOBODY WARNED ME.', 'I THOUGHT I IMAGINED IT.'],
+      agitation: ['I DIDN’T.', 'YOU’RE NOT ALONE.', 'SOMETHING’S OFF.', 'YOU CAN ACT NOW.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'TELL YOUR STORY ON THE CALL.', 'FREE CONSULTATION.'],
+      cta: [PHONE, 'BED SORES • LA', 'HABLAMOS ESPAÑOL', 'CALL NOW']
+    }},
+    { id: 'c10', tag: 'Glitch', title: '10 — SYSTEM ERROR: CARE', parts: {
+      hookLines: ['ERROR:', 'CARE NOT FOUND'],
+      problem: ['PATTERN DETECTED.', 'FALL • WOUND • WEIGHT.', 'YOU’D NEVER IGNORE THIS.'],
+      agitation: ['REAL HARM. REAL FAMILIES.', 'THEY MAY HAVE KNOWN.', 'YOU’RE NOT CRAZY.', 'STOP NORMALIZING IT.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'WE BUILD EVIDENCE.', 'TRIAL-READY • LA.'],
+      cta: ['FREE CASE REVIEW', PHONE, 'INSIDER ACCIDENT LAWYERS', 'CALL NOW']
+    }},
+    { id: 'c11', tag: 'Validation', title: '11 — They Want You Quiet', parts: {
+      hookLines: ['“DRAMATIC”?', 'FOR CARING?'],
+      problem: ['CONCERN IS LOVE.', 'BEDSORES. FEAR. SILENCE.', 'SILENCE PROTECTS NEGLECT.'],
+      agitation: ['YOU’RE NOT CRAZY.', 'THEY MAY HAVE KNOWN.', 'SOMETHING’S OFF.', 'SPEAK—NOW.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', '24/7 • REAL HELP.', 'NO FEE UNLESS WE WIN.'],
+      cta: ['FREE CASE REVIEW', PHONE, 'ABUSE • LA', 'CALL NOW']
+    }},
+    { id: 'c12', tag: 'Investigation', title: '12 — What the Clipboard Won’t Say', parts: {
+      hookLines: ['DATES. NAMES.', 'PATTERNS.'],
+      problem: ['TIMELINES SHOULD MATCH.', 'RECORDS TELL A STORY.', 'FACILITIES HOPE YOU DON’T READ.'],
+      agitation: ['THEY MAY HAVE KNOWN.', 'YOU’RE NOT CRAZY TO ASK.', 'BEDSORES = EVIDENCE.', 'YOU CAN ACT NOW.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'EXPERTS WHEN NEEDED.', 'LA NEGLECT CASES.'],
+      cta: ['CALL—FREE REVIEW', PHONE, 'MAX COMPENSATION FOCUS', 'CALL NOW']
+    }},
+    { id: 'c13', tag: 'Urgency', title: '13 — Before the Next “Incident”', parts: {
+      hookLines: ['STILL WAITING?', 'STOP.'],
+      problem: ['NEXT VISIT GETS WORSE.', 'HARM COMPOUNDS.', 'RIGHT TIME = NOW.'],
+      agitation: ['BEDSORES WON’T HEAL ON HOPE.', 'SOMETHING’S OFF.', 'YOU’RE NOT CRAZY.', 'YOU CAN ACT NOW.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'WE’LL TELL YOU STRAIGHT.', 'FREE CONSULTATION.'],
+      cta: [PHONE, 'NO FEE UNLESS WE WIN', 'LA • 24/7', 'CALL NOW']
+    }},
+    { id: 'c14', tag: 'Split', title: '14 — What They Say vs What You See', parts: {
+      hookLines: ['THEY SAID “FINE.”', 'YOU SAW ______'],
+      problem: ['THAT GAP MATTERS.', 'TRUST WHAT YOU SAW.', 'MISMATCH = QUESTIONS.'],
+      agitation: ['THEY MAY HAVE KNOWN.', 'RECORDS MAY PROVE IT.', 'YOU’RE NOT CRAZY.', 'ONE CALL STARTS IT.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'REQUEST DOCUMENTATION WITH US.', 'LA • SERIOUS CASES.'],
+      cta: ['FREE CASE REVIEW', PHONE, 'WILSHIRE SUITE 1620', 'CALL NOW']
+    }},
+    { id: 'c15', tag: 'Silent-first', title: '15 — NO SOUND NEEDED', parts: {
+      hookLines: ['SOUND OFF.', 'READ THIS.'],
+      problem: ['BEDSORES = NEGLECT SIGNAL.', 'BRUISES + LIES = ASK WHY.', 'YOU’RE NOT CRAZY.'],
+      agitation: ['BIG CAPTIONS WORK.', 'SOMETHING’S OFF.', 'THEY MAY HAVE KNOWN.', 'YOU CAN ACT NOW.'],
+      solution: ['THERE ARE PEOPLE WHO INVESTIGATE THIS.', 'FREE REVIEW. NO UPFRONT FEE.', 'ONE TAP. NEXT STEP.'],
+      cta: ['CALL NOW', PHONE, 'NO FEE UNLESS WE WIN', 'LOS ANGELES']
+    }}
+  ].map(function (c, idx) {
+    c.slides = buildSlides(c.parts, idx);
+    return c;
+  });
+
+  function applyMotionClass(el, transition) {
+    el.classList.remove(
+      'motion-impact', 'motion-fade', 'motion-zoom', 'motion-cut',
+      'motion-slide-up', 'motion-slide-left', 'motion-glitch'
+    );
+    var map = {
+      impact: 'motion-impact',
+      fade: 'motion-fade',
+      zoom: 'motion-zoom',
+      cut: 'motion-cut',
+      'slide-up': 'motion-slide-up',
+      'slide-left': 'motion-slide-left',
+      glitch: 'motion-glitch',
+      flash: 'motion-impact'
+    };
+    var cls = map[transition] || 'motion-fade';
+    void el.offsetWidth;
+    el.classList.add(cls);
+  }
+
+  function Player(el, concept) {
+    this.root = el;
+    this.concept = concept;
+    this.slides = concept.slides;
+    this.i = 0;
+    this.raf = null;
+    this.startedAt = 0;
+    this.running = false;
+    this.slideTimer = null;
+
+    this.stage = el.querySelector('.stage');
+    this.layer = el.querySelector('.slide-layer');
+    this.flash = el.querySelector('.js-flash');
+    this.bgHero = el.querySelector('.js-bg-hero');
+    this.bgNavy = el.querySelector('.js-bg-navy');
+    this.bgRed = el.querySelector('.js-bg-red');
+    this.progBar = el.querySelector('.progress__bar');
+    this.phaseEls = el.querySelectorAll('.phase-label span');
+
+    var self = this;
+    el.querySelector('[data-play]').addEventListener('click', function () { self.play(); });
+    el.querySelector('[data-replay]').addEventListener('click', function () { self.replay(); });
+  }
+
+  Player.prototype.setBg = function (kind) {
+    var map = { hero: this.bgHero, navy: this.bgNavy, red: this.bgRed };
+    [this.bgHero, this.bgNavy, this.bgRed].forEach(function (node) {
+      node.classList.remove('is-on');
+    });
+    if (map[kind]) map[kind].classList.add('is-on');
+  };
+
+  Player.prototype.showSlide = function (idx, useExit, prevSlide) {
+    var self = this;
+    var slide = this.slides[idx];
+    var inner = this.layer.querySelector('.slide-content');
+
+    function mount() {
+      self.setBg(slide.bg);
+      self.layer.querySelectorAll('.slide-content').forEach(function (n) { n.remove(); });
+      var wrap = document.createElement('div');
+      wrap.innerHTML = slide.html.trim();
+      var neu = wrap.firstElementChild;
+      if (!neu) return;
+      self.layer.appendChild(neu);
+      if (slide.flash) {
+        self.flash.classList.remove('on');
+        void self.flash.offsetWidth;
+        self.flash.classList.add('on');
+      }
+      applyMotionClass(neu, slide.transition);
+    }
+
+    if (!inner || !useExit) {
+      mount();
+      return;
+    }
+
+    var pt = prevSlide ? prevSlide.transition : 'fade';
+    if (pt === 'cut' || pt === 'impact' || pt === 'flash') {
+      inner.classList.add('exit-cut');
+    } else if (pt === 'zoom') {
+      inner.classList.add('exit-zoom');
+    } else {
+      inner.classList.add('exit-fade');
+    }
+
+    setTimeout(function () {
+      mount();
+    }, pt === 'cut' || pt === 'impact' ? 45 : 280);
+  };
+
+  Player.prototype.tickProgress = function () {
+    var self = this;
+    function frame() {
+      if (!self.running) return;
+      var elapsed = (Date.now() - self.startedAt) % TOTAL_MS;
+      self.progBar.style.width = (elapsed / TOTAL_MS * 100) + '%';
+      var ph = phaseAtElapsed(elapsed);
+      self.phaseEls.forEach(function (node, i) {
+        node.classList.toggle('on', i === ph);
+      });
+      self.raf = requestAnimationFrame(frame);
+    }
+    this.raf = requestAnimationFrame(frame);
+  };
+
+  Player.prototype.clearTimers = function () {
+    if (this.slideTimer) clearTimeout(this.slideTimer);
+    if (this.raf) cancelAnimationFrame(this.raf);
+    this.slideTimer = this.raf = null;
+  };
+
+  Player.prototype.play = function () {
+    if (this.running) return;
+    this.running = true;
+    this.startedAt = Date.now();
+    this.i = 0;
+    this.runSlide(true);
+    this.tickProgress();
+  };
+
+  Player.prototype.replay = function () {
+    this.clearTimers();
+    this.running = true;
+    this.startedAt = Date.now();
+    this.i = 0;
+    this.progBar.style.width = '0%';
+    this.runSlide(true);
+    this.tickProgress();
+  };
+
+  Player.prototype.runSlide = function (first) {
+    var self = this;
+    if (!this.running) return;
+    var idx = this.i;
+    var slide = this.slides[idx];
+    var prev = idx > 0 ? this.slides[idx - 1] : null;
+    this.showSlide(idx, !first, prev);
+
+    this.slideTimer = setTimeout(function () {
+      self.i++;
+      if (self.i >= self.slides.length) {
+        self.i = 0;
+        self.startedAt = Date.now();
+      }
+      self.runSlide(false);
+    }, slide.ms);
+  };
+
+  function render() {
+    var mount = document.getElementById('players-mount');
+    CONCEPTS.forEach(function (c) {
+      var block = document.createElement('section');
+      block.className = 'concept-block';
+      block.id = c.id;
+      block.innerHTML =
+        '<div class="concept-head">' +
+          '<div class="tag">' + escapeHtml(c.tag) + '</div>' +
+          '<h2>' + escapeHtml(c.title) + '</h2>' +
+        '</div>' +
+        '<div class="concept-player" data-player>' +
+          '<div class="stage">' +
+            '<div class="stage__bg js-bg-hero is-hero is-on"></div>' +
+            '<div class="stage__bg js-bg-navy is-navy"></div>' +
+            '<div class="stage__bg js-bg-red is-red"></div>' +
+            '<div class="stage__sweep"></div>' +
+            '<div class="stage__vignette"></div>' +
+            '<div class="accent-bar"></div>' +
+            '<div class="brand-watermark"><img src="https://call.insideraccidentlawyers.com/images/la/logo.webp" alt="" width="90" height="24" loading="lazy"></div>' +
+            '<div class="flash-burst js-flash"></div>' +
+            '<div class="phase-label">' +
+              '<span class="on">Hook</span><span>Problem</span><span>Agitate</span><span>Solve</span><span>CTA</span>' +
+            '</div>' +
+            '<div class="slide-layer"></div>' +
+            '<div class="progress"><div class="progress__bar"></div></div>' +
+          '</div>' +
+          '<div class="controls">' +
+            '<button type="button" data-play>Play</button>' +
+            '<button type="button" data-replay>Replay</button>' +
+          '</div>' +
+        '</div>';
+      mount.appendChild(block);
+      new Player(block.querySelector('[data-player]'), c);
+    });
+  }
+
+  render();
+
+  window.addEventListener('load', function () {
+    document.querySelectorAll('.concept-player').forEach(function (el, i) {
+      setTimeout(function () {
+        var btn = el.querySelector('[data-play]');
+        if (btn) btn.click();
+      }, i * 380);
+    });
+  });
+})();
+  </script>
+</body>
+</html>

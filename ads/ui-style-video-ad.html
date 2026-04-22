@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UI-style video — landing page simulation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #01366c;
+      --blue: #01468a;
+      --slate: #0c2334;
+      --gold: #ffbf00;
+      --gold2: #fbba00;
+      --gold-shadow: #cc9900;
+      --border: #e5e7eb;
+      --view-h: 1872px;
+      --track-h: 4044px;
+      --max-scroll: calc(var(--track-h) - var(--view-h));
+      --t: 18s;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      min-height: 100%;
+      background: #0a0a0a;
+      font-family: Inter, Poppins, system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .device {
+      width: 1080px;
+      height: 1920px;
+      max-width: calc(100vw - 24px);
+      max-height: calc(100vh - 24px);
+      aspect-ratio: 1080 / 1920;
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+      background: #111;
+    }
+    .chrome {
+      height: 52px;
+      background: linear-gradient(180deg, #1a1f2e 0%, #12161f 100%);
+      display: flex;
+      align-items: center;
+      padding: 0 16px 0 12px;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      z-index: 20;
+      position: relative;
+    }
+    .dots { display: flex; gap: 6px; }
+    .dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3d4556;
+    }
+    .dots span:first-child { background: #ef4444; }
+    .dots span:nth-child(2) { background: #f59e0b; }
+    .dots span:nth-child(3) { background: #22c55e; }
+    .url-bar {
+      flex: 1;
+      height: 34px;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      gap: 8px;
+      overflow: hidden;
+    }
+    .url-bar .lock {
+      width: 12px;
+      height: 12px;
+      border: 2px solid #22c55e;
+      border-radius: 2px;
+      position: relative;
+    }
+    .url-bar .lock::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 4px;
+      border: 2px solid #22c55e;
+      border-bottom: none;
+      border-radius: 6px 6px 0 0;
+      left: 1px;
+      top: -5px;
+    }
+    .viewport {
+      height: var(--view-h);
+      overflow: hidden;
+      position: relative;
+      background: #f3f6fa;
+    }
+    .page {
+      width: 100%;
+      height: var(--track-h);
+      will-change: transform;
+      animation: pageScroll var(--t) cubic-bezier(0.42, 0, 0.2, 1) infinite;
+    }
+    @keyframes pageScroll {
+      0%, 11% { transform: translateY(0); }
+      14%, 15% { transform: translateY(-180px); }
+      18%, 47% { transform: translateY(-920px); }
+      50%, 51% { transform: translateY(-980px); }
+      54%, 69% { transform: translateY(-1960px); }
+      72%, 76% { transform: translateY(-2020px); }
+      79%, 100% { transform: translateY(var(--max-scroll)); }
+    }
+
+    .hero {
+      position: relative;
+      min-height: 1100px;
+      padding: 0 0 48px;
+      background:
+        linear-gradient(rgba(12, 35, 52, 0.88), rgba(1, 54, 108, 0.82)),
+        linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.12)),
+        url("https://call.insideraccidentlawyers.com/images/la/hero-bg.webp") center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      animation: heroPaint var(--t) linear infinite;
+    }
+    @keyframes heroPaint {
+      0%, 4% { filter: brightness(0.4) contrast(1.1); opacity: 0.92; }
+      8%, 100% { filter: brightness(1) contrast(1); opacity: 1; }
+    }
+    .loadbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold2), #fff);
+      border-radius: 0 0 2px 0;
+      animation: loadX var(--t) linear infinite;
+    }
+    @keyframes loadX {
+      0% { width: 0%; opacity: 1; }
+      7% { width: 72%; }
+      10%, 100% { width: 100%; opacity: 0; }
+    }
+    .hero h1 {
+      font-family: Poppins, Inter, sans-serif;
+      font-weight: 800;
+      font-size: 76px;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: #fff;
+      max-width: 920px;
+      padding: 0 40px;
+      text-shadow: 0 12px 36px rgba(0,0,0,0.45);
+      animation: headlineIn var(--t) linear infinite;
+    }
+    @keyframes headlineIn {
+      0%, 5% { opacity: 0; transform: translateY(16px); }
+      10%, 100% { opacity: 1; transform: translateY(0); }
+    }
+    .fake-nav {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0.85;
+    }
+    .logo-pill {
+      font-family: Poppins, sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .nav-mini {
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      display: flex;
+      gap: 18px;
+    }
+
+    .section {
+      padding: 56px 36px 72px;
+    }
+    .check-section {
+      background: linear-gradient(180deg, #f3f6fa 0%, #fff 55%);
+      min-height: 980px;
+    }
+    .check-section h2 {
+      font-family: Poppins, sans-serif;
+      font-weight: 800;
+      font-size: 44px;
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 36px;
+      letter-spacing: -0.02em;
+    }
+    .checklist {
+      list-style: none;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 26px 28px;
+      margin-bottom: 16px;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      font-size: 34px;
+      font-weight: 700;
+      color: #1f2937;
+      position: relative;
+      transition: box-shadow 0.2s;
+      animation: li1 var(--t) linear infinite;
+    }
+    .checklist li:nth-child(2) { animation-name: li2; }
+    .checklist li:nth-child(3) { animation-name: li3; }
+    @keyframes li1 {
+      0%, 26% { border-color: var(--border); background: #fff; box-shadow: none; }
+      27%, 100% { border-color: rgba(1, 70, 138, 0.42); background: rgba(1, 70, 138, 0.06); box-shadow: 0 8px 24px rgba(1, 54, 108, 0.12); }
+    }
+    @keyframes li2 {
+      0%, 29% { border-color: var(--border); background: #fff; box-shadow: none; }
+      30%, 100% { border-color: rgba(1, 70, 138, 0.42); background: rgba(1, 70, 138, 0.06); box-shadow: 0 8px 24px rgba(1, 54, 108, 0.12); }
+    }
+    @keyframes li3 {
+      0%, 32% { border-color: var(--border); background: #fff; box-shadow: none; }
+      33%, 100% { border-color: rgba(1, 70, 138, 0.42); background: rgba(1, 70, 138, 0.06); box-shadow: 0 8px 24px rgba(1, 54, 108, 0.12); }
+    }
+    .box {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 8px;
+      border: 3px solid #6b7280;
+      position: relative;
+      background: #fff;
+      animation: bx1 var(--t) linear infinite;
+    }
+    .checklist li:nth-child(2) .box { animation-name: bx2; }
+    .checklist li:nth-child(3) .box { animation-name: bx3; }
+    @keyframes bx1 {
+      0%, 26% { background: #fff; border-color: #6b7280; transform: scale(1); }
+      26.5% { transform: scale(0.92); }
+      27%, 100% { background: var(--blue); border-color: var(--blue); transform: scale(1); }
+    }
+    @keyframes bx2 {
+      0%, 29% { background: #fff; border-color: #6b7280; transform: scale(1); }
+      29.5% { transform: scale(0.92); }
+      30%, 100% { background: var(--blue); border-color: var(--blue); transform: scale(1); }
+    }
+    @keyframes bx3 {
+      0%, 32% { background: #fff; border-color: #6b7280; transform: scale(1); }
+      32.5% { transform: scale(0.92); }
+      33%, 100% { background: var(--blue); border-color: var(--blue); transform: scale(1); }
+    }
+    .box::after {
+      content: "";
+      position: absolute;
+      left: 13px;
+      top: 7px;
+      width: 10px;
+      height: 20px;
+      border: solid #fff;
+      border-width: 0 4px 4px 0;
+      transform: rotate(45deg) scale(0.6);
+      opacity: 0;
+      animation: cm1 var(--t) linear infinite;
+    }
+    .checklist li:nth-child(2) .box::after { animation-name: cm2; }
+    .checklist li:nth-child(3) .box::after { animation-name: cm3; }
+    @keyframes cm1 {
+      0%, 26% { opacity: 0; transform: rotate(45deg) scale(0.5); }
+      27%, 100% { opacity: 1; transform: rotate(45deg) scale(1); }
+    }
+    @keyframes cm2 {
+      0%, 29% { opacity: 0; transform: rotate(45deg) scale(0.5); }
+      30%, 100% { opacity: 1; transform: rotate(45deg) scale(1); }
+    }
+    @keyframes cm3 {
+      0%, 32% { opacity: 0; transform: rotate(45deg) scale(0.5); }
+      33%, 100% { opacity: 1; transform: rotate(45deg) scale(1); }
+    }
+    .ripple {
+      position: absolute;
+      left: 40px;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(1, 70, 138, 0.25);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: rip1 var(--t) linear infinite;
+    }
+    .checklist li:nth-child(2) .ripple { animation-name: rip2; }
+    .checklist li:nth-child(3) .ripple { animation-name: rip3; }
+    @keyframes rip1 {
+      0%, 26% { width: 0; height: 0; opacity: 0; }
+      26.8% { width: 120px; height: 120px; opacity: 1; }
+      28%, 100% { opacity: 0; }
+    }
+    @keyframes rip2 {
+      0%, 29% { width: 0; height: 0; opacity: 0; }
+      29.8% { width: 120px; height: 120px; opacity: 1; }
+      31%, 100% { opacity: 0; }
+    }
+    @keyframes rip3 {
+      0%, 32% { width: 0; height: 0; opacity: 0; }
+      32.8% { width: 120px; height: 120px; opacity: 1; }
+      34%, 100% { opacity: 0; }
+    }
+    .alert {
+      margin-top: 28px;
+      text-align: center;
+      font-family: Poppins, sans-serif;
+      font-weight: 800;
+      font-size: 38px;
+      color: var(--navy);
+      padding: 22px 24px;
+      border-radius: 12px;
+      background: rgba(251, 191, 36, 0.2);
+      border: 2px solid rgba(251, 191, 36, 0.65);
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(12px) scale(0.96);
+      animation: alertPop var(--t) linear infinite;
+    }
+    @keyframes alertPop {
+      0%, 34% { opacity: 0; transform: translateY(14px) scale(0.94); }
+      36%, 48% { opacity: 1; transform: translateY(0) scale(1); }
+      49%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .attorney-section {
+      position: relative;
+      min-height: 920px;
+      padding: 48px 36px 64px;
+      background: linear-gradient(135deg, rgba(1, 54, 108, 0.92), rgba(12, 35, 52, 0.95));
+      overflow: hidden;
+    }
+    .attorney-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://call.insideraccidentlawyers.com/images/la/attorney-hero-400.webp") center 20% / cover no-repeat;
+      opacity: 0.35;
+      animation: attZoom var(--t) linear infinite;
+    }
+    @keyframes attZoom {
+      0%, 52% { transform: scale(1); }
+      70%, 100% { transform: scale(1.06); }
+    }
+    .attorney-inner {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .att-photo {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.25);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+      animation: cardLift var(--t) linear infinite;
+    }
+    .att-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+    @keyframes cardLift {
+      0%, 54% { opacity: 0; transform: translateY(24px); }
+      58%, 100% { opacity: 1; transform: translateY(0); }
+    }
+    .attorney-section p {
+      font-family: Poppins, sans-serif;
+      font-weight: 800;
+      font-size: 40px;
+      line-height: 1.2;
+      color: #fff;
+      text-align: center;
+      max-width: 900px;
+      text-shadow: 0 6px 20px rgba(0,0,0,0.45);
+      animation: attText var(--t) linear infinite;
+    }
+    @keyframes attText {
+      0%, 56% { opacity: 0; transform: translateY(10px); }
+      62%, 100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .cta-section {
+      min-height: 620px;
+      padding: 56px 36px 80px;
+      background: linear-gradient(180deg, var(--slate) 0%, var(--navy) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+    .cta-section .fine {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.45;
+      max-width: 880px;
+    }
+    .cta-section .fine strong { color: var(--gold2); font-weight: 700; }
+    .cta-btn {
+      display: block;
+      width: 100%;
+      max-width: 920px;
+      background: linear-gradient(180deg, #ffd24a 0%, var(--gold) 45%, #e6ac00 100%);
+      color: var(--navy);
+      font-family: Poppins, sans-serif;
+      font-weight: 800;
+      font-size: 52px;
+      letter-spacing: 0.02em;
+      text-align: center;
+      padding: 36px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 0 var(--gold-shadow), 0 16px 36px rgba(0,0,0,0.4);
+      animation: ctaLife var(--t) linear infinite;
+    }
+    .cta-btn .num {
+      display: block;
+      font-family: Inter, sans-serif;
+      font-weight: 800;
+      font-size: 64px;
+      margin-top: 8px;
+      letter-spacing: 0.06em;
+    }
+    @keyframes ctaLife {
+      0%, 76% { transform: scale(1); box-shadow: 0 8px 0 var(--gold-shadow), 0 14px 32px rgba(0,0,0,0.35); }
+      78%, 82% { transform: scale(1.04); box-shadow: 0 10px 0 var(--gold-shadow), 0 22px 48px rgba(0,0,0,0.45); }
+      84%, 88% { transform: scale(1); box-shadow: 0 8px 0 var(--gold-shadow), 0 14px 32px rgba(0,0,0,0.35); }
+      90%, 94% { transform: scale(1.06); box-shadow: 0 11px 0 var(--gold-shadow), 0 26px 56px rgba(0,0,0,0.5); }
+      96%, 100% { transform: scale(1.03); box-shadow: 0 9px 0 var(--gold-shadow), 0 18px 40px rgba(0,0,0,0.42); }
+    }
+
+    .cursor {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      z-index: 30;
+      pointer-events: none;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.45));
+      animation: curMove var(--t) linear infinite;
+    }
+    .cursor svg { width: 100%; height: 100%; display: block; }
+    @keyframes curMove {
+      0%, 18% { opacity: 0; transform: translate(420px, 620px); }
+      19% { opacity: 1; }
+      22%, 25% { opacity: 1; transform: translate(280px, 780px); }
+      26%, 28% { opacity: 1; transform: translate(280px, 900px); }
+      29%, 31% { opacity: 1; transform: translate(280px, 1020px); }
+      32%, 52% { opacity: 0; transform: translate(280px, 1020px); }
+      53%, 100% { opacity: 0; }
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 72px;
+      border: 3px solid rgba(255,255,255,0.35);
+      border-radius: 22px;
+      z-index: 15;
+      opacity: 0;
+      animation: hintShow var(--t) linear infinite;
+    }
+    .scroll-hint::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 14px;
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      animation: hintDot var(--t) linear infinite;
+    }
+    @keyframes hintShow {
+      0%, 10% { opacity: 0; }
+      11%, 16% { opacity: 0.9; }
+      18%, 100% { opacity: 0; }
+    }
+    @keyframes hintDot {
+      0%, 11% { transform: translate(-50%, 0); opacity: 1; }
+      16% { transform: translate(-50%, 22px); opacity: 0.3; }
+      18%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="device" role="img" aria-label="Simulated landing page interaction, 18 second loop">
+    <div class="chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="url-bar"><span class="lock" aria-hidden="true"></span> insideraccidentlawyers.com/los-angeles-nursing-home-lawyer</div>
+    </div>
+    <div class="viewport">
+      <div class="page">
+        <section class="hero">
+          <div class="loadbar" aria-hidden="true"></div>
+          <div class="fake-nav">
+            <div class="logo-pill">Insider</div>
+            <div class="nav-mini"><span>Cases</span><span>Contact</span></div>
+          </div>
+          <h1>Not normal aging</h1>
+        </section>
+
+        <section class="section check-section">
+          <h2>Does this sound familiar?</h2>
+          <ul class="checklist">
+            <li>
+              <span class="ripple" aria-hidden="true"></span>
+              <span class="box" aria-hidden="true"></span>
+              Bed sores
+            </li>
+            <li>
+              <span class="ripple" aria-hidden="true"></span>
+              <span class="box" aria-hidden="true"></span>
+              Not repositioned
+            </li>
+            <li>
+              <span class="ripple" aria-hidden="true"></span>
+              <span class="box" aria-hidden="true"></span>
+              Calls ignored
+            </li>
+          </ul>
+          <div class="alert" role="status">This is likely neglect</div>
+        </section>
+
+        <section class="attorney-section">
+          <div class="attorney-inner">
+            <div class="att-photo">
+              <img src="https://call.insideraccidentlawyers.com/images/la/attorney-hero-400.webp" width="520" height="520" alt="">
+            </div>
+            <p>Talk to a Los Angeles nursing home lawyer who handles neglect cases.</p>
+          </div>
+        </section>
+
+        <section class="cta-section">
+          <p class="fine">Free case review. <strong>No fee unless we win.</strong></p>
+          <button type="button" class="cta-btn" tabindex="-1">Call now<span class="num">844-467-4335</span></button>
+        </section>
+      </div>
+
+      <div class="cursor" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 3l14 10-6 1.5-2.5 6L6 3z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="scroll-hint" aria-hidden="true"></div>
+    </div>
+  </div>
+</body>
+</html>
