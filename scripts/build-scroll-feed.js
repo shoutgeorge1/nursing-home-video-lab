@@ -60,22 +60,23 @@ const html = `<!DOCTYPE html>
     }
     .logo-cta {
       display: block;
-      margin: 0.55em 0 0 0;
+      margin: 0.6em 0 0 0;
       line-height: 0;
     }
     .logo-cta .logo-inner {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.2em;
+      gap: 0.22em;
       max-width: 100%;
-      padding: 0.5em 0.75em 0.4em 0.75em;
+      padding: 0.62em 0.9em 0.52em 0.9em;
       line-height: 1.05;
       text-align: center;
       text-rendering: optimizeLegibility;
       color: #fafbfc;
       background: linear-gradient(180deg, rgba(18,18,26,0.96) 0%, rgba(8,8,12,0.98) 100%);
       border-radius: 2px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
     }
     .logo-line {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
@@ -83,12 +84,12 @@ const html = `<!DOCTYPE html>
       font-weight: 800;
     }
     .logo-line--brand {
-      font-size: clamp(0.8rem, 2.4vw, 0.95rem);
+      font-size: clamp(0.95rem, 2.7vw, 1.1rem);
       letter-spacing: 0.2em;
       text-indent: 0.1em;
     }
     .logo-line--trademark {
-      font-size: clamp(0.72rem, 2.1vw, 0.86rem);
+      font-size: clamp(0.86rem, 2.45vw, 0.98rem);
       font-weight: 700;
       letter-spacing: 0.32em;
       text-indent: 0.1em;
@@ -98,7 +99,7 @@ const html = `<!DOCTYPE html>
       position: absolute;
       inset: 0;
       opacity: 0;
-      transition: opacity 0.5s ease, filter 0.5s ease;
+      transition: opacity 0.48s ease, filter 0.48s ease;
       pointer-events: none;
       z-index: 0;
     }
@@ -225,9 +226,21 @@ const html = `<!DOCTYPE html>
         0 4px 24px rgba(0,0,0,0.85),
         0 0 40px rgba(0,0,0,0.5);
     }
+    .cap-cta__subline {
+      max-width: 100%;
+      margin: 0.35em 0 0 0;
+      padding: 0 2%;
+      font-size: clamp(0.8rem, 2.1vw, 0.95rem);
+      line-height: 1.2;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0.04em;
+      text-align: center;
+      color: #d2d5dc;
+    }
     .cap-cta__la {
       max-width: 100%;
-      margin: 0.2em 0 0.1em 0;
+      margin: 0.35em 0 0.1em 0;
       padding: 0 2%;
       font-size: clamp(0.72rem, 2.05vw, 0.92rem);
       line-height: 1.25;
@@ -321,15 +334,6 @@ const html = `<!DOCTYPE html>
       from { transform: scale(0.86); }
       to { transform: scale(0.99); }
     }
-    .cam-zoom-slow.cam-zoom-slow--lag3 {
-      animation-delay: -8.5s;
-    }
-    .cam-zoom-slow.cam-zoom-slow--lag2 {
-      animation-delay: -17s;
-    }
-    .cam-zoom-slow.cam-zoom-slow--lag1 {
-      animation-delay: -25.5s;
-    }
   </style>
 </head>
 <body>
@@ -356,7 +360,6 @@ const html = `<!DOCTYPE html>
     'call_now_screen.jpg'
   ];
   var POS = ['pos-center'];
-  var ZOOM_LAG = ['', 'cam-zoom-slow--lag1', 'cam-zoom-slow--lag2', 'cam-zoom-slow--lag3'];
   var variations = JSON.parse(document.getElementById('variations-json').textContent);
 
   function hashStr(s) {
@@ -455,6 +458,14 @@ const html = `<!DOCTYPE html>
     return fb;
   }
 
+  /** Use JSON still first so each ad's ODD set isn't overridden by repeat semantics. */
+  function primaryImageForSlide(text, jsonImage) {
+    if (jsonImage && IMAGE_POOL.indexOf(jsonImage) !== -1) {
+      return jsonImage;
+    }
+    return semanticPrimaryImage(text, jsonImage);
+  }
+
   function wireImg(img, primaryName) {
     var names = fallbackQueue(primaryName);
     var urls = names.map(urlFor);
@@ -485,14 +496,14 @@ const html = `<!DOCTYPE html>
   function structuredDuration(base, index, n, rng) {
     var bucket = slideTimingBucket(index, n);
     var t;
-    if (bucket === 'cta') t = 2.52 + rng() * 0.38;
+    if (bucket === 'cta') t = 2.52 + rng() * 0.38 + 0.5;
     else if (bucket === 'close') t = 2.28 + rng() * 0.18;
     else if (bucket === 'open') t = 2.22 + rng() * 0.34;
     else t = 1.8 + rng() * 0.38;
     var anchor = typeof base === 'number' && base > 0 ? base : 1.85;
     t += (anchor - 1.85) * 0.035;
     if (bucket === 'cta') {
-      t = Math.min(3.0, Math.max(2.4, t));
+      t = Math.min(3.5, Math.max(2.9, t));
     } else {
       t = Math.min(2.62, Math.max(1.78, t));
     }
@@ -618,9 +629,8 @@ const html = `<!DOCTYPE html>
       layer.className = 'layer';
       if (!textOnly) {
         var pic = document.createElement('img');
-        var imIdx = (s - 1) / 2 | 0;
-        pic.className = 'cam-zoom-slow' + (ZOOM_LAG[imIdx] ? ' ' + ZOOM_LAG[imIdx] : '');
-        wireImg(pic, semanticPrimaryImage(slide.text, slide.image));
+        pic.className = 'cam-zoom-slow';
+        wireImg(pic, primaryImageForSlide(slide.text, slide.image));
         layer.appendChild(pic);
       }
       durations.push(structuredDuration(slide.duration, s, n, rngS));
@@ -642,11 +652,15 @@ const html = `<!DOCTYPE html>
           ctaDisclaimer.textContent =
             'Attorney advertising. This is not legal advice. Past results do not guarantee, warrant, or predict a similar outcome. No attorney-client relationship is formed from viewing this ad. California attorneys. Additional terms, fees, and conditions may apply to any representation.';
           cap.appendChild(ctaCopy);
+          var ctaSub = document.createElement('p');
+          ctaSub.className = 'cap-cta__subline';
+          ctaSub.textContent = 'Takes less than 30 seconds';
+          cap.appendChild(ctaSub);
           cap.appendChild(ctaLa);
           cap.appendChild(createCtaWordmark());
           cap.appendChild(ctaDisclaimer);
         } else {
-          fillCaption(cap, slide.text, pos, 5);
+          fillCaption(cap, slide.text, pos, 8);
         }
         el.appendChild(cap);
       }
@@ -661,7 +675,9 @@ const html = `<!DOCTYPE html>
     function advance() {
       i = (i + 1) % n;
       for (var j = 0; j < els.length; j++) els[j].classList.toggle('on', j === i);
-      setTimeout(advance, durations[i] * 1000 + microPauseMs());
+      var delay = durations[i] * 1000 + microPauseMs();
+      if (i === n - 2) delay += 250 + (rng() * 151) | 0;
+      setTimeout(advance, delay);
     }
     setTimeout(advance, durations[0] * 1000 + microPauseMs());
   }
