@@ -54,40 +54,17 @@
     }
     .logo-cta {
       display: block;
-      margin: 0.6em 0 0 0;
+      margin: 0.55em 0 0 0;
       line-height: 0;
-    }
-    .logo-cta .logo-inner {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.22em;
-      max-width: 100%;
-      padding: 0.62em 0.9em 0.52em 0.9em;
-      line-height: 1.05;
       text-align: center;
-      text-rendering: optimizeLegibility;
-      color: #fafbfc;
-      background: linear-gradient(180deg, rgba(18,18,26,0.96) 0%, rgba(8,8,12,0.98) 100%);
-      border-radius: 2px;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
     }
-    .logo-line {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-      text-transform: uppercase;
-      font-weight: 800;
-    }
-    .logo-line--brand {
-      font-size: clamp(0.95rem, 2.7vw, 1.1rem);
-      letter-spacing: 0.2em;
-      text-indent: 0.1em;
-    }
-    .logo-line--trademark {
-      font-size: clamp(0.86rem, 2.45vw, 0.98rem);
-      font-weight: 700;
-      letter-spacing: 0.32em;
-      text-indent: 0.1em;
-      color: #e8eaed;
+    .logo-cta__img {
+      display: block;
+      max-width: min(88%, 240px);
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+      object-fit: contain;
     }
     .slide {
       position: absolute;
@@ -1355,19 +1332,16 @@
     w.className = 'logo-cta';
     w.setAttribute('role', 'img');
     w.setAttribute('aria-label', 'Insider Lawyers');
-    var inner = document.createElement('div');
-    inner.className = 'logo-inner';
-    var l1 = document.createElement('div');
-    l1.className = 'logo-line logo-line--brand';
-    l1.setAttribute('aria-hidden', 'true');
-    l1.textContent = 'INSIDER';
-    var l2 = document.createElement('div');
-    l2.className = 'logo-line logo-line--trademark';
-    l2.setAttribute('aria-hidden', 'true');
-    l2.textContent = 'LAWYERS';
-    inner.appendChild(l1);
-    inner.appendChild(l2);
-    w.appendChild(inner);
+    var im = document.createElement('img');
+    im.className = 'logo-cta__img';
+    im.src = ASSET_BASE + 'insider-lawyers-logo-white.png';
+    im.alt = '';
+    im.width = 480;
+    im.height = 160;
+    im.decoding = 'async';
+    im.draggable = false;
+    im.setAttribute('loading', 'eager');
+    w.appendChild(im);
     return w;
   }
 

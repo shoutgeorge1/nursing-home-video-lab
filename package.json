@@ -8,7 +8,11 @@
     "render": "node render.js",
     "placeholders": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/generate-nursing-home-placeholders.ps1",
     "import:assets": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/import-nursing-home-assets.ps1",
-    "build:scroll": "node scripts/build-scroll-feed.js"
+    "build:scroll": "node scripts/build-scroll-feed.js",
+    "build:logo": "node scripts/process-insider-logo.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
   },
   "dependencies": {
     "ffmpeg-static": "^5.2.0",
