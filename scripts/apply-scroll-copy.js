@@ -1,0 +1,195 @@
+'use strict';
+/**
+ * Replaces slide text in ads/nursing-home-neglect-variations.json with plain English
+ * (max 6 words per line). Run: node scripts/apply-scroll-copy.js
+ */
+const fs = require('fs');
+const path = require('path');
+const root = path.join(__dirname, '..');
+const p = path.join(root, 'ads', 'nursing-home-neglect-variations.json');
+
+const L = {
+  variation_01: [
+    'THIS INJURY WAS PREVENTABLE',
+    'A FAMILY MEMBER SITS BEDSIDE',
+    'THE STAFF DID NOT TURN HER',
+    'A NURSE STANDS WITH A PHONE',
+    'STAFF WERE NOT WATCHING BEDS',
+    'A PATIENT LAY ALONE IN BED',
+    'THE PRESSURE SORE GREW WORSE',
+    'A NURSE CHECKS A PRESSURE SORE',
+    'SEE IF YOU HAVE A CASE'
+  ],
+  variation_02: [
+    'SHE NEEDED TURNS, NOT SORES',
+    'A FAMILY MEMBER HOLDS A HAND',
+    'NO NURSE TURNED HER IN TIME',
+    'THE NURSE FACED THE PHONE FIRST',
+    'NO ONE TURNED HER FOR HOURS',
+    'SHE RANG A BELL, NO ANSWER',
+    'THE SORE BURNED THROUGH HER SKIN',
+    'A PHONE SHOWS A CALL, NOW',
+    'CLICK TO SEE IF YOU QUALIFY'
+  ],
+  variation_03: [
+    'BEDSORES COME FROM NOT TURNING',
+    'FAMILY SAW SOMETHING WAS WRONG',
+    'WORRY KEPT FAMILY UP AT NIGHT',
+    'A NURSE ON A PHONE BEDSIDE',
+    'THE HOME FAILED TO TURN HER',
+    'A PATIENT LAY ALONE IN BED',
+    'THE SORE BURNED THROUGH THE SKIN',
+    'AN ELDER SITS WHEELCHAIR ALONE',
+    'FIND OUT WHAT HAPPENED'
+  ],
+  variation_04: [
+    'THE PAIN WAS NOT JUST AGE',
+    'YOU SAW SOMETHING WAS WRONG',
+    'CARE WAS ORDERED, NOT GIVEN',
+    'BEDS WERE FULL, STAFF AWAY',
+    'THE HOME FAILED TO TURN HER',
+    'A PRESSURE SORE IS SKIN DAMAGE',
+    'NOTES AND SKIN DID NOT MATCH',
+    'HOLD YOUR PROOF AND CALL US',
+    'SEE IF YOU HAVE A CASE'
+  ],
+  variation_05: [
+    'A BEDSORE IS NOT A MYSTERY',
+    'HOURS WENT BY WITH NO TURNS',
+    'A NURSE PASSED, SHE LAY STILL',
+    'THE NURSE FACED A PHONE SCREEN',
+    'SHE LAY UNTURNED, TOO LONG',
+    'BROKEN SKIN MEANT REAL PAIN',
+    'STAFF COULD STILL HAVE TURNED HER',
+    'WE CAN BUILD A CLEAR TIMELINE',
+    'CLICK TO SEE IF YOU QUALIFY'
+  ],
+  variation_06: [
+    'SHE COULD NOT TURN BY HERSELF',
+    'A FAMILY MEMBER HOLDS A HAND',
+    'THE FLOOR HAD TOO FEW NURSES',
+    'A NURSE ON A PHONE BEDSIDE',
+    'STAFF DID NOT COME IN TIME',
+    'A PATIENT LAY ALONE IN BED',
+    'PRESSURE ON SKIN BUILDS SORES',
+    'A PHONE SHOWS A CALL, NOW',
+    'FIND OUT WHAT HAPPENED'
+  ],
+  variation_07: [
+    'WORRIED FAMILIES COME TO US DAILY',
+    'A FAMILY MEMBER HOLDS A HAND',
+    'A SPOT GREW INTO A SORE',
+    'A PATIENT LAY ALONE IN BED',
+    'STAFF WROTE CHARTS, NOT TURNS',
+    'ROUNDS DID NOT COME THAT DAY',
+    'A WOUND THIS DEEP HARMS',
+    'A PHONE SHOWS A CALL, NOW',
+    'CLICK TO SEE IF YOU QUALIFY'
+  ],
+  variation_08: [
+    'STAFF SAID SHE WAS FINE, LIE',
+    'YOU CAME OFTEN, STILL WORRIED',
+    'YOU SAW SOMETHING WAS WRONG',
+    'A PATIENT LAY ALONE IN BED',
+    'NO ONE CAME TO HELP HER',
+    'TURNS WERE DUE, NOT GIVEN',
+    'THE WOUND HAD BROKEN THE SKIN',
+    'A SENIOR SITS WHEELCHAIR ALONE',
+    'SEE IF YOU HAVE A CASE'
+  ],
+  variation_09: [
+    'A SORE GETS WORSE EVERY DAY',
+    'SHE COULD NOT TURN ALONE',
+    'NO ONE TURNED HER IN TIME',
+    'A PATIENT LAY ALONE IN BED',
+    'THIS IS NEGLECT, NOT BAD LUCK',
+    'A PHONE SHOWS A CALL, NOW',
+    'BROKEN SKIN CAN GET INFECTED',
+    'PHOTOS AND DATES STILL MATTER',
+    'FIND OUT WHAT HAPPENED'
+  ],
+  variation_10: [
+    'SHE STILL NEEDED TURNS ON TIME',
+    'YOU SAW SOMETHING WAS WRONG',
+    'A CHECKBOX IS NOT A TURN',
+    'A NURSE STANDS WITH A PHONE',
+    'THE HOME FAILED TO TURN HER',
+    'A PHONE SHOWS A CALL, NOW',
+    'TWO HOUR TURNS WERE THE RULE',
+    'A SENIOR SITS WHEELCHAIR ALONE',
+    'CLICK TO SEE IF YOU QUALIFY'
+  ],
+  variation_11: [
+    'BRUISES AND STORIES DID NOT MATCH',
+    'A NURSE ON A PHONE BEDSIDE',
+    'CHARTS DID NOT MATCH THE DAY',
+    'A PATIENT LAY ALONE IN BED',
+    'THEY LET THE SORE GROW WORSE',
+    'A STAGE FOUR SORE IS SERIOUS',
+    'CREAM IS NOT A STAFF TURN',
+    'GET A FREE CASE REVIEW, NOW',
+    'SEE IF YOU HAVE A CASE'
+  ],
+  variation_12: [
+    'WORRY MEANS SOMETHING IS WRONG',
+    'A NURSE ON A PHONE BEDSIDE',
+    'THE HOME FAILED, NOT FAMILY',
+    'A PATIENT LAY ALONE IN BED',
+    'SHE LAY UNTURNED, TOO LONG',
+    'TURNS CAME DUE, NOT A MEETING',
+    'A SENIOR SITS WHEELCHAIR ALONE',
+    'WE CAN BUILD A CLEAR TIMELINE',
+    'FIND OUT WHAT HAPPENED'
+  ],
+  variation_13: [
+    'THEY SAID FINE, BUT SHE WORSENED',
+    'A NURSE ON A PHONE BEDSIDE',
+    'STAFF BLAMED AGE, NOT NEGLECT',
+    'A PATIENT LAY ALONE IN BED',
+    'THIS IS NEGLECT, NOT FATE',
+    'A PHONE SHOWS A CALL, NOW',
+    'SOMEONE SIGNED, STILL NO TURN',
+    'YOUR FAMILY DESERVES THE TRUTH',
+    'CLICK TO SEE IF YOU QUALIFY'
+  ],
+  variation_14: [
+    'A STAGE FOUR SORE IS SERIOUS',
+    'A NURSE ON A PHONE BEDSIDE',
+    'PAIN IS REAL, NOT IMAGINED',
+    'SHE SCREAMED, STAFF DID NOT COME',
+    'NO ONE TURNED HER FOR HOURS',
+    'A PHONE SHOWS A CALL, NOW',
+    'DATES, PHOTOS, AND FACES, MATTER',
+    'A SENIOR SITS WHEELCHAIR ALONE',
+    'SEE IF YOU HAVE A CASE'
+  ],
+  variation_15: [
+    'OPEN SKIN IS NOT JUST AGE',
+    'A MAN LAY IN BED, UNSEEN',
+    'A WOMAN SAT IN A WHEELCHAIR',
+    'NO NURSE CAME TO THAT HALL',
+    'HOURS, NO TURNS, HEEL GOT WORSE',
+    'A PHONE SHOWS A CALL, NOW',
+    'CHARTS AND SKIN DO NOT MATCH',
+    'A FAMILY STILL HAS A VOICE',
+    'CLICK TO SEE IF YOU QUALIFY'
+  ]
+};
+
+function wc(s) {
+  return s.trim().split(/\s+/).filter(Boolean).length;
+}
+
+const d = JSON.parse(fs.readFileSync(p, 'utf8'));
+if (d.length !== 15) throw new Error('Expected 15 variations');
+d.forEach(function (v) {
+  const lines = L[v.video_id];
+  if (!lines) throw new Error('Missing ' + v.video_id);
+  if (lines.length !== 9) throw new Error('Bad length ' + v.video_id);
+  for (var i = 0; i < 9; i++) {
+    if (wc(lines[i]) > 6) throw new Error('Too long ' + v.video_id + ' ' + i + ' ' + lines[i]);
+    v.slides[i].text = lines[i];
+  }
+});
+fs.writeFileSync(p, JSON.stringify(d, null, 2) + '\n', 'utf8');
+console.log('Updated', p);
