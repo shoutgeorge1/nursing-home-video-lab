@@ -324,7 +324,7 @@ const html = `<!DOCTYPE html>
     'nurse_on_phone_ignoring.jpg',
     'unattended_patient.jpg',
     'nurse_checking_bedsore.jpg',
-    'call_now_screen.jpg',
+    'bedside_family.jpg',
     'elderly_wheelchair_window_dark.jpg'
   ];
   /** Fallbacks: max one phone-neglect still per ad (see rewrite-nursing-images.js ODD). */
@@ -334,7 +334,7 @@ const html = `<!DOCTYPE html>
     'nurse_on_phone_ignoring.jpg',
     'unattended_patient.jpg',
     'nurse_checking_bedsore.jpg',
-    'call_now_screen.jpg'
+    'bedside_family.jpg'
   ];
   var POS = ['pos-center'];
   var variations = JSON.parse(document.getElementById('variations-json').textContent);
@@ -394,7 +394,7 @@ const html = `<!DOCTYPE html>
       return IMAGE_POOL.indexOf(name) !== -1 ? name : fb;
     };
     if (/SEE IF YOUR CASE|CLICK TO GET HELP|CLICK TO SEE IF YOU HAVE|CALL NOW|GET HELP TODAY|NO FEE UNLESS|WE WIN YOUR CASE|FREE CASE REVIEW|SPEAK WITH A LAWYER NOW|FREE CASE|STOP SCROLLING|IF YOU.*WATCHING|TALK TO A LAWYER|GET HELP/.test(U)) {
-      return pick('call_now_screen.jpg');
+      return pick('nurse_checking_bedsore.jpg');
     }
     if (/WEREN.T WATCHING|WATCHING|ON PHONES|DISTRACTED|SUPERVISION|EYES OFF|PRIORITIES WRONG|NOT THIS SHIFT|STAFF ON|WHO.S REALLY|THEY IGNORED THE WARNING/.test(U)) {
       return pick('nurse_on_phone_ignoring.jpg');
